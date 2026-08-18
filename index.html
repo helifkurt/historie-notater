@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Historie — Notatbok</title>
+<style>
+:root{
+--brand:#E67AA8;
+--accent:#F2A6C6;
+--boxfill:#FDEEF5;
+--warnfill:#FFF5FA;
+--warnborder:#F2A6C6;
+--text:#222;
+--muted:#666;
+--bg:#FFFAFC;
+--sidebar-w:270px;
+}
+*{box-sizing:border-box;}
+body{
+margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:var(--text); background:var(--bg); line-height:1.55;
+}
+header.topbar{
+position:sticky; top:0; z-index:50;
+display:flex; align-items:center; gap:12px;
+background:var(--brand); color:#fff; padding:10px 14px;
+}
+header.topbar button#navToggle{
+background:rgba(255,255,255,.15); border:none; color:#fff; font-size:20px;
+padding:6px 12px; border-radius:8px; cursor:pointer;
+}
+header.topbar .title{font-weight:700; font-size:16px;}
+
+.layout{display:flex; min-height:100vh;}
+
+nav#sidebar{
+width:var(--sidebar-w); flex-shrink:0; background:#fff; border-right:1px solid #e3e3e0;
+position:fixed; top:46px; bottom:0; left:0; overflow-y:auto; padding:14px 10px 40px;
+transform:translateX(0); transition:transform .2s ease; z-index:40;
+}
+nav#sidebar h3{font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:18px 8px 6px;}
+nav#sidebar a{
+display:block; padding:8px 10px; border-radius:8px; color:var(--text); text-decoration:none; font-size:14.5px;
+}
+nav#sidebar a.active, nav#sidebar a:hover{background:var(--boxfill); color:var(--accent); font-weight:600;}
+nav#sidebar .placeholder{
+font-size:13px; color:var(--muted); font-style:italic; padding:8px 10px;
+}
+
+main{margin-left:var(--sidebar-w); padding:26px 22px 80px; max-width:820px; width:100%;}
+
+@media (max-width:820px){
+nav#sidebar{transform:translateX(-105%);}
+nav#sidebar.open{transform:translateX(0); box-shadow:2px 0 16px rgba(0,0,0,.15);}
+main{margin-left:0; padding:20px 16px 80px;}
+}
+
+h1.doctitle{color:var(--brand); font-size:1.7em; margin-bottom:2px;}
+
+section{padding-top:10px; margin-bottom:8px; scroll-margin-top:60px;}
+h2{color:var(--brand); border-bottom:2px solid var(--brand); padding-bottom:6px; margin-top:2.4em;}
+h3{color:var(--accent); margin-top:1.6em;}
+h4{font-style:italic; color:#333; margin-bottom:.3em;}
+
+.box{
+background:var(--boxfill); border:1.5px solid var(--accent); border-radius:10px;
+padding:14px 16px; margin:16px 0;
+}
+.box .box-title{color:var(--accent); font-weight:700; margin-bottom:8px; font-size:.95em; text-transform:uppercase; letter-spacing:.02em;}
+.box.warn{background:var(--warnfill); border-color:var(--warnborder);}
+.box.warn .box-title{color:var(--warnborder);}
+.box.plain{background:#f2f2f0; border-color:#bbb;}
+
+ul, ol{padding-left:1.3em;}
+li{margin-bottom:6px;}
+.checklist li{list-style:none; margin-bottom:8px;}
+.checklist li::before{content:"☐ "; }
+
+.example{border-left:4px solid var(--accent); padding-left:14px; margin:18px 0;}
+.example h4{margin-top:0;}
+
+.timeline p{margin:0 0 10px;}
+.timeline strong{color:var(--brand);}
+
+footer.pagefoot{margin-top:60px; padding-top:16px; border-top:1px solid #ddd; color:var(--muted); font-size:.9em;}
+
+a.backtotop{position:fixed; right:16px; bottom:16px; background:var(--accent); color:#fff; border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 2px 8px rgba(0,0,0,.25); font-size:18px;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+<button id="navToggle" aria-label="Åpne meny">☰</button>
+<span class="title">Historie — Notatbok</span>
+</header>
+
+<div class="layout">
+<nav id="sidebar">
+<h3>Opplysningstid og revolusjoner</h3>
+<a href="#forside">Forside &amp; kompetansemål</a>
+<a href="#hvordan-bruke">Hvordan bruke notatet</a>
+<a href="#k1">1. Opplysningstidens idégrunnlag</a>
+<a href="#k2">2. Det gamle regimet</a>
+<a href="#k3">3. Den amerikanske revolusjonen</a>
+<a href="#k4">4. Den franske revolusjonen</a>
+<a href="#k5">5. Arven fram til vår tid</a>
+<a href="#kompetanse">Kobling til kompetansemål</a>
+<a href="#sjekkliste">Sjekkliste</a>
+<a href="#feil">Vanlige eksamensfeil</a>
+<a href="#ordliste">Ordliste</a>
+
+<h3>Kommende kapitler</h3>
+<div class="placeholder">Nye notater legges til her etter hvert som vi jobber gjennom faget — denne notatboken oppdateres i stedet for å lage nye filer.</div>
+</nav>
+
+<main>
+
+<section id="forside">
+<p style="color:var(--accent); font-weight:700; margin-bottom:0;">HISTORIE VG3</p>
+<h1 class="doctitle">Opplysningstid og revolusjoner</h1>
+
+<div class="box plain">
+<p><strong>Dette notatet dekker:</strong> opplysningstidens idégrunnlag (Hobbes, Locke, Montesquieu, Rousseau, Voltaire, Kant) · det gamle regimet i Frankrike · den amerikanske revolusjonen (1763–1787) · den franske revolusjonen (1789–1799) · arven fram til den norske Grunnloven og vår egen tid.</p>
+<p><strong>Kilder:</strong> NDLA (Historie Vg3), Store norske leksikon og Eidsvoll1814.no — sett sammen og forklart i dybden med egne eksempler og strukturer for eksamen.</p>
+</div>
+
+<p><strong>Kompetansemål (Historie Vg3, LK20):</strong></p>
+<ul>
+<li>«redegjøre for tanker og ideologier bak politiske omveltninger fra opplysningstiden til i dag, og undersøke hvordan de har fått betydning lokalt, nasjonalt eller internasjonalt»</li>
+<li>«sammenligne to eller flere framstillinger av en historisk hendelse, person eller epoke, og reflektere over hvordan ulikt utgangspunkt kan påvirke forståelsen»</li>
+<li>«drøfte om det er brudd eller kontinuitet i en samfunnsutvikling, og reflektere over hva som gjør en hendelse eller et handlingsmønster historisk betydningsfullt»</li>
+</ul>
+</section>
+
+<section id="hvordan-bruke">
+<h2>Hvordan bruke dette notatet</h2>
+<p>Kapitlene bygger på hverandre: idéene i kapittel 1 forklarer <em>hvorfor</em> revolusjonene i kapittel 3 og 4 skjedde, og kapittel 5 viser hvorfor dette fortsatt er relevant i dag. De rosa boksene («Viktig») er det du bør kunne forklare med egne ord. Boksene merket «Vanlig feil» er ting som går igjen hos elever hvert år — les dem to ganger. Bruk gjerne strukturen <strong>idé → konflikt → resultat</strong> når du selv skal skrive om temaet.</p>
+</section>
+
+<section id="k1">
+<h2>1. Opplysningstidens idégrunnlag</h2>
+<p>Opplysningstiden regnes gjerne fra Den engelske revolusjonen i 1688 til Den franske revolusjonen i 1789. Kjernen i perioden er en ny tillit til den menneskelige fornuft: i stedet for å hente sannhet og autoritet fra Gud, kirken eller kongen, mente opplysningsfilosofene at mennesket kunne bruke fornuft og vitenskapelig metode til å forstå og forbedre naturen, samfunnet og seg selv.</p>
+
+<h3>1.1 Fra Hobbes til Locke: samfunnskontrakt og naturrett</h3>
+<p>Thomas Hobbes (1588–1679) beskrev i <em>Leviathan</em> (1651) menneskets naturtilstand som en krigstilstand der alle kjemper mot alle. For å slippe unna dette inngår menneskene en samfunnskontrakt: de gir fra seg deler av sin frihet til en hersker i bytte mot sikkerhet.</p>
+<p>John Locke (1632–1704) tok samfunnskontrakten videre, men med en annen konklusjon: mennesket har naturgitte rettigheter — naturretten — til liv, frihet og eiendom, uavhengig av om noen konge anerkjenner dem. Staten er bare et middel til å beskytte disse rettighetene.</p>
+<div class="box">
+<div class="box-title">Viktig — Locke og retten til opprør</div>
+<p>Hvis staten bryter kontrakten (f.eks. ved å herske vilkårlig), har folket ikke bare rett, men plikt til å gjøre opprør og innsette en ny styring. Statsmakten utgår fra folket, ikke fra Gud. Dette prinsippet — folkesuverenitet — er kimen til både den amerikanske og den franske revolusjonen.</p>
+</div>
+
+<h3>1.2 Montesquieu: maktfordeling</h3>
+<p>Charles de Montesquieu (1689–1755) analyserte i <em>Om lovenes ånd</em> (1748) hvordan makt kan misbrukes når den samles på én hånd. Løsningen var maktfordelingsprinsippet: statsmakten deles i tre uavhengige grener som kontrollerer hverandre:</p>
+<ol>
+<li><strong>Den lovgivende makt</strong> — vedtar lover (et parlament/en nasjonalforsamling).</li>
+<li><strong>Den utøvende makt</strong> — setter lovene i verk (en regjering/president).</li>
+<li><strong>Den dømmende makt</strong> — dømmer etter lovene, uavhengig av de to andre.</li>
+</ol>
+<p>Dette prinsippet — «checks and balances» — er selve konstruksjonen bak USAs grunnlov (1787) og senere den norske Grunnloven (1814).</p>
+
+<h3>1.3 Rousseau: folkesuverenitet og allmennviljen</h3>
+<p>Jean-Jacques Rousseau (1712–1778) skrev <em>Om samfunnspakten</em> (1762), der han hevdet at legitim politisk makt bare kan bygge på folkets samlede vilje — allmennviljen. Rousseaus idé om at «all makt utgår fra folket» ble et av de mest siterte prinsippene i den franske menneskerettighetserklæringen av 1789.</p>
+
+<h3>1.4 Voltaire: ytringsfrihet og toleranse</h3>
+<p>Voltaire (1694–1778) kjempet mot religiøs intoleranse og maktmisbruk. I <em>Traktat om toleranse</em> (1763) argumenterte han for religionsfrihet. Ytringsfrihet og pressefrihet ble opplysningstidens store frihetskrav, sammen med religionsfrihet og handelsfrihet.</p>
+
+<h3>1.5 Kant: opplysning som prosess og myndighet</h3>
+<p>Immanuel Kant (1724–1804) definerte i «Hva er opplysning?» (1784) opplysning som menneskets utgang fra selvforskyldt umyndighet — å tenke selvstendig i stedet for å la andre tenke for deg. Motto: <em>«Sapere aude»</em> («Ha mot til å bruke din egen forstand»).</p>
+
+<div class="box">
+<div class="box-title">Viktig — de fem ideene du MÅ kunne knytte til riktig tenker</div>
+<ul>
+<li><strong>Naturrett og samfunnskontrakt</strong> → Hobbes og Locke</li>
+<li><strong>Maktfordeling</strong> (lovgivende/utøvende/dømmende) → Montesquieu</li>
+<li><strong>Folkesuverenitet / allmennviljen</strong> → Rousseau (og Locke)</li>
+<li><strong>Ytringsfrihet, religionsfrihet, toleranse</strong> → Voltaire</li>
+<li><strong>Opplysning som myndiggjøring / «tenk selv»</strong> → Kant</li>
+</ul>
+</div>
+<div class="box warn">
+<div class="box-title">Vanlig feil</div>
+<p>Mange blander sammen Locke og Rousseau, eller tror maktfordeling er Rousseaus idé. Pass på å koble riktig tenker til riktig begrep. Nevn også gjerne paradokset: opplysningstenkerne talte om universelle menneskerettigheter, men flere av dem (bl.a. Locke og senere Thomas Jefferson) eide selv slaver, og kvinners rettigheter var ikke inkludert i «alle menneskers» frihet.</p>
+</div>
+</section>
+
+<section id="k2">
+<h2>2. Det gamle regimet: stendersamfunnet i Frankrike</h2>
+<p>For å forstå hvorfor det ble revolusjon i Frankrike i 1789, må du kjenne strukturen opplysningsideene støtte mot: eneveldet og stendersamfunnet (l'Ancien Régime).</p>
+<h3>2.1 Eneveldet</h3>
+<p>Frankrike ble styrt som et enevelde: kongen hadde all politisk makt og var innsatt av Gud. Ludvig 14. skal ha sagt «Staten, det er meg» — det fantes ingen grunnlov og ingen formell kontroll av kongens beslutninger.</p>
+<h3>2.2 De tre stendene</h3>
+<ul>
+<li><strong>Første stand (geistligheten):</strong> ca. 1 % av befolkningen, skattefritatt.</li>
+<li><strong>Andre stand (adelen):</strong> ca. 1–2 % av befolkningen, skattefritatt, med føydale privilegier.</li>
+<li><strong>Tredje stand:</strong> resten av befolkningen (ca. 97–98 %) — bønder, håndverkere og et voksende borgerskap. Denne gruppen betalte nesten alle skattene, men hadde minst politisk makt.</li>
+</ul>
+<p>I byene vokste det fram en radikal gruppe kalt <strong>sanskulotter</strong> («uten kneknebukser») — daglønnere, håndverkere og småhandlere som senere drev revolusjonen i en mer radikal retning.</p>
+<div class="box">
+<div class="box-title">Viktig — hvorfor akkurat 1789?</div>
+<p>Revolusjonen kom av at flere kriser traff samtidig:</p>
+<ul>
+<li>Statens finanser var i krise etter dyre kriger (bl.a. støtten til den amerikanske uavhengighetskrigen).</li>
+<li>Kongen forsøkte å skattlegge adelen for første gang — adelen protesterte kraftig.</li>
+<li>Dårlige avlinger i 1788 ga brødmangel og skyhøye priser.</li>
+<li>Opplysningsideene ga et språk (naturrett, folkesuverenitet) for at den gamle ordningen var illegitim.</li>
+</ul>
+<p>Legg merke til mønsteret: <strong>strukturelle/dyptgripende årsaker</strong> (stendersamfunn, gjeld, idéer) + <strong>utløsende/kortsiktige hendelser</strong> (avlingssvikt, stenderforsamlingen) = revolusjon. Bruk dette skillet aktivt i en eksamensbesvarelse.</p>
+</div>
+</section>
+
+<section id="k3">
+<h2>3. Den amerikanske revolusjonen (1763–1787)</h2>
+<h3>3.1 Årsaker</h3>
+<p>Etter at Storbritannia vant Syvårskrigen i 1763, satt landet med enorm krigsgjeld. Parlamentet forsøkte å dekke denne med nye skatter på koloniene — uten at kolonistene hadde representanter som kunne stemme over dette. Slagordet ble «No taxation without representation». Konflikten eskalerte 16. desember 1773 med Boston Tea Party.</p>
+<h3>3.2 Krig og uavhengighet</h3>
+<p>De første kampene stod ved Lexington og Concord i april 1775. Den 4. juli 1776 vedtok den andre kontinentalkongressen uavhengighetserklæringen, hovedsakelig forfattet av Thomas Jefferson og bygget direkte på Lockes idéer om naturlige rettigheter. Krigen vendte da britene kapitulerte ved Saratoga i 1777 (Frankrike alliert seg med amerikanerne), og ble praktisk avgjort ved Yorktown i 1781. Parisavtalen (1783) anerkjente USAs uavhengighet.</p>
+<h3>3.3 Grunnloven av 1787</h3>
+<p>USAs grunnlov (1787) satte Montesquieus maktfordelingsprinsipp ut i praksis: en lovgivende kongress, en utøvende president og en dømmende høyesterett. Bill of Rights (1791) sikret grunnleggende friheter. Dette var første gang opplysningsidéene ble bygget inn i en fungerende statsforfatning — og ble et forbilde for både Frankrike (1791) og Norge (1814).</p>
+<div class="box warn">
+<div class="box-title">Eksempel: resonner som til eksamen</div>
+<p><strong>Oppgave:</strong> «Forklar hvordan opplysningsideer kom til uttrykk i den amerikanske revolusjonen.»</p>
+<p>Svarmønster: <strong>(1)</strong> identifiser idé → <strong>(2)</strong> vis konkret uttrykk i hendelse/kilde → <strong>(3)</strong> forklar konsekvens. «Uavhengighetserklæringen bygger på Lockes naturrett. Fordi kolonistene mente kongen brøt denne kontrakten (skatt uten representasjon), fikk de etter Lockes logikk rett til opprør. Dette ble institusjonalisert i grunnloven av 1787 gjennom Montesquieus maktfordeling.» Koble alltid hvert ledd til en navngitt idé/tenker.</p>
+</div>
+</section>
+
+<section id="k4">
+<h2>4. Den franske revolusjonen (1789–1799)</h2>
+<p>Den franske revolusjonen er det tydeligste symbolet på opplysningsidéenes gjennombrudd i praksis — mer radikal og voldelig enn den amerikanske, og med en full omveltning av samfunnsordenen i Europas politiske sentrum.</p>
+<h3>4.1 Årsaker (oppsummert)</h3>
+<ul>
+<li><strong>Politiske:</strong> eneveldet manglet legitimitet; tredjestanden hadde ingen reell makt.</li>
+<li><strong>Sosiale:</strong> arvelige privilegier for adel og geistlighet; føydale avgifter for bøndene.</li>
+<li><strong>Økonomiske:</strong> statlig gjeldskrise og dårlige avlinger i 1788.</li>
+<li><strong>Ideologiske:</strong> opplysningsideer om naturrett og folkesuverenitet, forsterket av at den amerikanske revolusjonen viste at et republikansk styre var mulig.</li>
+</ul>
+<h3>4.2 Kronologi</h3>
+<div class="timeline">
+<p><strong>5. mai 1789</strong> — Generalstendene åpnes i Versailles for første gang siden 1614.</p>
+<p><strong>17. juni 1789</strong> — Tredjestanden erklærer seg som nasjonalforsamling.</p>
+<p><strong>20. juni 1789</strong> — Ballhuseden: sverger å ikke skilles før Frankrike har fått en grunnlov.</p>
+<p><strong>14. juli 1789</strong> — Stormingen av Bastillen. Symbol på eneveldets fall — Frankrikes nasjonaldag.</p>
+<p><strong>4. august 1789</strong> — Nasjonalforsamlingen opphever de føydale privilegiene.</p>
+<p><strong>26. august 1789</strong> — Menneske- og borgerrettighetserklæringen vedtas: «Menneskene er født og forblir frie og like i rettigheter».</p>
+<p><strong>20.–21. juni 1791</strong> — Kongefamiliens fluktforsøk stoppes i Varennes; revolusjonen radikaliseres.</p>
+<p><strong>3. september 1791</strong> — Grunnlov innfører konstitusjonelt monarki.</p>
+<p><strong>20. april 1792</strong> — Frankrike erklærer krig mot Østerrike.</p>
+<p><strong>10. august 1792</strong> — Tuileriene stormes; kongen fengsles.</p>
+<p><strong>21. september 1792</strong> — Monarkiet avskaffes; første franske republikk utropes.</p>
+<p><strong>21. januar 1793</strong> — Ludvig 16. henrettes.</p>
+<p><strong>1793–1794</strong> — Skrekkherredømmet under Robespierre: titusener henrettes som «fiender av revolusjonen». Marie Antoinette henrettes 16. oktober 1793.</p>
+<p><strong>28. juli 1794</strong> — Robespierre selv styrtes og henrettes; skrekkherredømmet tar slutt.</p>
+<p><strong>1795–1799</strong> — Direktoriet styrer, men perioden er politisk ustabil.</p>
+<p><strong>9.–10. november 1799</strong> — Napoleon Bonaparte tar makten i et statskupp — revolusjonsperioden regnes som avsluttet.</p>
+</div>
+<div class="box">
+<div class="box-title">Viktig — tre faser du bør strukturere svaret rundt</div>
+<p><strong>1) Reformfasen (1789–1791):</strong> fra stenderforsamling til konstitusjonelt monarki og menneskerettighetserklæringen.</p>
+<p><strong>2) Republikk og radikalisering (1792–1794):</strong> monarkiet avskaffes, kongen henrettes, skrekkherredømmet.</p>
+<p><strong>3) Konsolidering (1795–1799):</strong> Direktoriet, ustabilitet, og til slutt Napoleons statskupp.</p>
+</div>
+<div class="box warn">
+<div class="box-title">Vanlig feil</div>
+<p>Mange tror revolusjonen var «over» etter stormingen av Bastillen (1789) — den varte i ti år til 1799. Skill også klart mellom konstitusjonelt monarki (1791–92, kongen er fortsatt der) og republikk (fra 1792, ingen konge).</p>
+</div>
+</section>
+
+<section id="k5">
+<h2>5. Arven: fra Wienkongressen til vår egen tid</h2>
+<h3>5.1 Wienkongressen (1814–1815) og nye opprør</h3>
+<p>Etter Napoleons fall forsøkte stormaktene på Wienkongressen å gjenopprette den førrevolusjonære ordenen i Europa (restaurasjon). Det lyktes bare delvis: nye opprør brøt ut i julirevolusjonen (1830) og over store deler av Europa i 1848-revolusjonene, ofte drevet av krav om nasjonal selvbestemmelse og konstitusjonelt styre.</p>
+<h3>5.2 Den norske Grunnloven av 1814</h3>
+<p>Da eidsvollsmennene skrev den norske grunnloven i 1814, lånte de direkte fra de samme kildene: den amerikanske grunnloven (1787, maktfordeling og grunnleggende friheter), den franske grunnloven/menneskerettighetserklæringen (1789/1791, folkesuverenitet) og den spanske Cádiz-grunnloven (1812). Norge beholdt kongedømmet, men kongens makt ble sterkt begrenset og adelens særrettigheter ble til slutt avskaffet (1821).</p>
+<h3>5.3 Hvorfor dette er kjernen i kompetansemålet</h3>
+<p>Kompetansemålet ber deg redegjøre for tanker og ideologier bak politiske omveltninger «fra opplysningstiden til i dag». Opplysningstid og revolusjoner er derfor utgangspunktet for en lang linje: 1830/1848-revolusjonene, nasjonale samlingsbevegelser, 1900-tallets demokratiseringer og moderne debatter om menneskerettigheter og maktfordeling bygger videre på begrepene fra dette kapittelet.</p>
+<div class="box">
+<div class="box-title">Slik viser du dybde i en eksamensbesvarelse</div>
+<p>Koble alltid tilbake til: <strong>(1)</strong> hvilken opplysningsidé/tenker som ligger bak, <strong>(2)</strong> hvilken struktur idéen utfordret, og <strong>(3)</strong> hvilken konkret institusjon eller rettighet resultatet ble. Denne tre-trinns strukturen (idé → konflikt → resultat) er det sensorene ser etter.</p>
+</div>
+</section>
+
+<section id="kompetanse">
+<h2>Kobling til kompetansemål og vurdering</h2>
+<div class="box">
+<div class="box-title">Hovedmål for dette temaet</div>
+<p><em>«redegjøre for tanker og ideologier bak politiske omveltninger fra opplysningstiden til i dag, og undersøke hvordan de har fått betydning lokalt, nasjonalt eller internasjonalt»</em></p>
+<ul>
+<li>Kunne navngi og forklare minst fem opplysningsidéer og koble dem til riktig tenker.</li>
+<li>Kunne forklare hvordan disse idéene konkret kom til uttrykk i den amerikanske og den franske revolusjonen.</li>
+<li>Kunne følge idéene videre til 1814-grunnloven og senere demokratiseringsbølger.</li>
+</ul>
+</div>
+</section>
+
+<section id="sjekkliste">
+<h2>Sjekkliste — kan du dette?</h2>
+<ul class="checklist">
+<li>Jeg kan forklare naturrett og samfunnskontrakt, og hvorfor Hobbes og Locke kom til forskjellige konklusjoner.</li>
+<li>Jeg kan forklare Montesquieus maktfordelingsprinsipp med alle tre statsmakter.</li>
+<li>Jeg kan forklare Rousseaus idé om folkesuverenitet/allmennviljen.</li>
+<li>Jeg kan forklare hvorfor Voltaire og Kant er viktige for ytringsfrihet og opplysning som prosess.</li>
+<li>Jeg kan beskrive stendersamfunnet i Frankrike og hvorfor det var urettferdig.</li>
+<li>Jeg kan liste minst tre dyptgripende og to utløsende årsaker til den franske revolusjonen.</li>
+<li>Jeg kan sette opp en tidslinje for den amerikanske revolusjonen (1763–1787) med minst fem daterte hendelser.</li>
+<li>Jeg kan sette opp en tidslinje for den franske revolusjonen (1789–1799) med minst åtte daterte hendelser.</li>
+<li>Jeg kan forklare forskjellen på reformfasen, republikk/terror-fasen og konsolideringsfasen i den franske revolusjonen.</li>
+<li>Jeg kan forklare hvordan den norske Grunnloven av 1814 bygger på de samme idéene.</li>
+<li>Jeg kan bruke idé → konflikt → resultat-strukturen i et sammenhengende svar om temaet.</li>
+</ul>
+</section>
+
+<section id="feil">
+<h2>De vanligste eksamensfeilene i dette kapittelet</h2>
+<ol>
+<li>Å blande sammen hvilken tenker som står bak hvilket begrep (spesielt Locke/Rousseau og maktfordeling/folkesuverenitet).</li>
+<li>Å tro revolusjonen var over etter stormingen av Bastillen (14. juli 1789) — den varte til 1799.</li>
+<li>Å blande konstitusjonelt monarki (1791–92) og republikk (fra 1792) i Frankrike.</li>
+<li>Å forklare revolusjonene bare med «folk var sinte» uten å skille mellom dyptgripende og utløsende årsaker.</li>
+<li>Å glemme å koble tilbake til kompetansemålets kjerne: hvilken betydning fikk idéene senere (f.eks. den norske Grunnloven 1814)?</li>
+<li>Å bruke årstall upresist — kunne plassere Boston Tea Party (1773), uavhengighetserklæringen (1776), Bastillen (1789) og Napoleons statskupp (1799) riktig i tid.</li>
+</ol>
+</section>
+
+<section id="ordliste">
+<h2>Ordliste</h2>
+<ul>
+<li><strong>Opplysningstiden:</strong> idéhistorisk periode (ca. 1688–1789) der fornuft og vitenskap ble satt over religiøs og kongelig autoritet.</li>
+<li><strong>Naturrett:</strong> idéen om at mennesket har universelle, medfødte rettigheter uavhengig av statens lover.</li>
+<li><strong>Samfunnskontrakt:</strong> tanken om at statsmakt bygger på en (tenkt) avtale mellom folket og styringen.</li>
+<li><strong>Folkesuverenitet:</strong> prinsippet om at all politisk makt utgår fra folket.</li>
+<li><strong>Maktfordeling:</strong> prinsippet om å dele statsmakten i en lovgivende, en utøvende og en dømmende gren (Montesquieu).</li>
+<li><strong>Allmennviljen:</strong> Rousseaus begrep for folkets samlede, felles vilje.</li>
+<li><strong>Enevelde:</strong> styreform der kongen har all politisk makt.</li>
+<li><strong>Stendersamfunn:</strong> samfunn delt inn i juridisk ulike grupper med forskjellige rettigheter — i Frankrike: geistlighet, adel og tredjestanden.</li>
+<li><strong>Sanskulotter:</strong> radikale byarbeidere og småhandlere i Paris, viktig drivkraft i revolusjonens mer radikale faser.</li>
+<li><strong>Skrekkherredømmet (la Terreur):</strong> perioden 1793–1794 under bl.a. Robespierre, med masseanklager og henrettelser.</li>
+<li><strong>Restaurasjon:</strong> forsøket etter Napoleonskrigene på å gjenopprette den førrevolusjonære ordenen i Europa.</li>
+<li><strong>Checks and balances:</strong> at de tre statsmaktene kontrollerer og balanserer hverandre.</li>
+</ul>
+
+<footer class="pagefoot">
+<p>Historie Vg3 (HIS01-03) · Sist oppdatert av Elif Kurt</p>
+</footer>
+</section>
+
+</main>
+</div>
+
+<a href="#forside" class="backtotop" title="Til toppen">↑</a>
+
+<script>
+const toggle = document.getElementById('navToggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+sidebar.querySelectorAll('a').forEach(a => {
+a.addEventListener('click', () => {
+if (window.innerWidth <= 820) sidebar.classList.remove('open');
+});
+});
+
+const sections = document.querySelectorAll('main section[id]');
+const navLinks = sidebar.querySelectorAll('a');
+const obs = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+const link = sidebar.querySelector('a[href="#' + entry.target.id + '"]');
+if (!link) return;
+if (entry.isIntersecting) {
+navLinks.forEach(l => l.classList.remove('active'));
+link.classList.add('active');
+}
+});
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
