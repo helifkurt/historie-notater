@@ -74,8 +74,45 @@ padding:14px 16px; margin:16px 0;
 
 ul, ol{padding-left:1.3em;}
 li{margin-bottom:6px;}
+.checklist{padding-left:0;}
 .checklist li{list-style:none; margin-bottom:8px;}
-.checklist li::before{content:"☐ "; }
+.checklist label{display:flex; align-items:flex-start; gap:10px; cursor:pointer; padding:6px 8px; border-radius:8px;}
+.checklist label:hover{background:var(--boxfill);}
+.checklist input[type="checkbox"]{
+appearance:none; -webkit-appearance:none; flex-shrink:0; width:20px; height:20px; margin-top:1px;
+border:2px solid var(--accent); border-radius:5px; cursor:pointer; position:relative; background:#fff;
+}
+.checklist input[type="checkbox"]:checked{background:var(--brand); border-color:var(--brand);}
+.checklist input[type="checkbox"]:checked::after{
+content:""; position:absolute; left:5px; top:1px; width:6px; height:11px;
+border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg);
+}
+.checklist .checktext{transition:color .15s ease, opacity .15s ease;}
+.checklist input[type="checkbox"]:checked ~ .checktext{color:var(--muted); text-decoration:line-through; opacity:.75;}
+.checklist-progress{font-size:.9em; color:var(--muted); margin:10px 0 4px;}
+.checklist-reset{
+margin-top:10px; background:none; border:1.5px solid var(--accent); color:var(--accent);
+border-radius:8px; padding:6px 12px; font-size:.85em; cursor:pointer;
+}
+.checklist-reset:hover{background:var(--boxfill);}
+
+.celebrate-emoji{
+position:fixed; font-size:26px; pointer-events:none; z-index:999; left:0; top:0;
+animation:celebrateFloat 1.5s ease-out forwards;
+}
+@keyframes celebrateFloat{
+0%{transform:translate(0,0) scale(.4) rotate(0deg); opacity:0;}
+15%{opacity:1; transform:translate(var(--dx,0),-10px) scale(1) rotate(var(--rot,10deg));}
+100%{transform:translate(var(--dx,0),-140px) scale(1.05) rotate(var(--rot,10deg)); opacity:0;}
+}
+.compliment-toast{
+position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(16px);
+background:var(--brand); color:#fff; padding:12px 22px; border-radius:999px;
+font-weight:700; font-size:.95em; box-shadow:0 6px 20px rgba(0,0,0,.22);
+opacity:0; transition:opacity .25s ease, transform .25s ease; z-index:1000;
+pointer-events:none; text-align:center; white-space:nowrap; max-width:90vw;
+}
+.compliment-toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
 .example{border-left:4px solid var(--accent); padding-left:14px; margin:18px 0;}
 .example h4{margin-top:0;}
@@ -121,7 +158,7 @@ a.backtotop{position:fixed; right:16px; bottom:16px; background:var(--accent); c
 <h1 class="doctitle">Opplysningstid og revolusjoner</h1>
 
 <div class="box plain">
-<p><strong>Dette notatet dekker:</strong> opplysningstidens idégrunnlag (Hobbes, Locke, Montesquieu, Rousseau, Voltaire, Kant) · det gamle regimet i Frankrike · den amerikanske revolusjonen (1763–1787) · den franske revolusjonen (1789–1799) · arven fram til den norske Grunnloven og vår egen tid.</p>
+<p><strong>Dette notatet dekker:</strong> opplysningstidens idégrunnlag (Hobbes, Locke, Montesquieu, Rousseau, Voltaire, Kant, Diderot/d'Alembert og Beccaria) · det gamle regimet i Frankrike · den amerikanske revolusjonen (1763–1787) · den franske revolusjonen (1789–1799) · arven fram til den norske Grunnloven og vår egen tid.</p>
 <p><strong>Kilder:</strong> NDLA (Historie Vg3), Store norske leksikon og Eidsvoll1814.no — sett sammen og forklart i dybden med egne eksempler og strukturer for eksamen.</p>
 </div>
 
@@ -168,14 +205,40 @@ a.backtotop{position:fixed; right:16px; bottom:16px; background:var(--accent); c
 <h3>1.5 Kant: opplysning som prosess og myndighet</h3>
 <p>Immanuel Kant (1724–1804) definerte i «Hva er opplysning?» (1784) opplysning som menneskets utgang fra selvforskyldt umyndighet — å tenke selvstendig i stedet for å la andre tenke for deg. Motto: <em>«Sapere aude»</em> («Ha mot til å bruke din egen forstand»).</p>
 
+<h3>1.6 Diderot, d'Alembert og Encyklopedien</h3>
+<p>Denis Diderot (1713–1784) og Jean Le Rond d'Alembert (1717–1783) redigerte Encyklopedien (1751–1772), et oppslagsverk på 17 bind med tekst og 11 bind med illustrasjonsplansjer — til sammen rundt 75 000 oppslagsord. Målet var å samle all verdens kunnskap på ett sted og gjøre den tilgjengelig for allmennheten, og løfte fram praktisk og teknisk kunnskap (håndverk, industri) som tidligere ikke ble ansett som «fin nok».</p>
+<p>Encyklopedien var ikke bare et oppslagsverk, men et politisk prosjekt: ved å behandle kongemakt, kirke og adel med samme kritiske, fornuftsbaserte tilnærming som naturvitenskapen, utfordret den den etablerte samfunnsordenen. Verket ble derfor forbudt av myndighetene på grunn av sitt «subversive og kritiske innhold», og redaktørene måtte fortsette arbeidet i hemmelighet, med enkelte bind utgitt med et fiktivt utgiversted for å unngå sensur. Encyklopedien regnes i dag som «opplysningstidens fyrtårn».</p>
+
+<h3>1.7 Beccaria: kampen mot tortur og vilkårlig straff</h3>
+<p>For å forstå hvorfor strafferettsreform ble en av opplysningstidens store kampsaker, må du kjenne til hvordan justis fungerte før reformene.</p>
+<div class="box warn">
+<div class="box-title">Eksempel — henrettelsen av Robert-François Damiens (1757)</div>
+<p>5. januar 1757 forsøkte tjeneren Robert-François Damiens å knivstikke kong Ludvig 15. utenfor Versailles. Kongen ble bare lettere skadet, men Damiens ble dømt for kongemord — den mest alvorlige forbrytelsen som fantes i eneveldet, fordi kongen ble ansett som innsatt av Gud.</p>
+<p>Henrettelsen 28. mars 1757 var en offentlig, timelang tortur: Damiens ble brent med rødglødende tenger, fikk smeltet bly, kokende olje og brennende svovel helt i sårene, og til slutt forsøkt revet i stykker av fire hester på Place de Grève i Paris foran et stort publikum. Straffen var ment som et skrekkeksempel — en demonstrasjon av kongens absolutte makt over kroppen til den som utfordret ham.</p>
+</div>
+<p>Cesare Beccaria (1738–1794), en italiensk jurist og opplysningstenker, publiserte i 1764 (anonymt, av frykt for represalier) skriftet <em>Om forbrytelse og straff</em> (Dei delitti e delle pene). Der angrep han nettopp den typen rettferdighet Damiens-saken representerer:</p>
+<ul>
+<li>Straffen skal stå i forhold til forbrytelsen (proporsjonalitet) — ikke være vilkårlig hard for å skremme.</li>
+<li>Straffens formål er å avskrekke fra nye forbrytelser, ikke å hevne seg — grusomhet gjør ikke straffen mer effektiv.</li>
+<li>Beccaria tok klart avstand fra tortur og dødsstraff, og mente rask og sikker straff virker bedre avskrekkende enn ekstrem grusomhet.</li>
+<li>Lover må være klare og offentlig kjent på forhånd (legalitetsprinsippet) — ingen skal kunne straffes for noe loven ikke uttrykkelig forbød.</li>
+</ul>
+<p>Beccarias skrift ble raskt oversatt til flere språk og fikk enorm innflytelse på reformer av strafferetten i hele Europa utover på 1800-tallet — mange av prinsippene hans er selve grunnmuren i moderne strafferett, inkludert den norske.</p>
 <div class="box">
-<div class="box-title">Viktig — de fem ideene du MÅ kunne knytte til riktig tenker</div>
+<div class="box-title">Viktig — koble eksempel og idé</div>
+<p>Damiens-henrettelsen (1757) og Beccarias skrift (1764) hører sammen: den brutale, offentlige henrettelsen er nettopp det eksempelet opplysningstenkerne reagerte på. Bruk gjerne dette paret som konkret dokumentasjon når du skal vise brudd/kontinuitet i rettsvesenets utvikling — fra kroppslig, offentlig avstraffelse som maktdemonstrasjon, til et system bygget på proporsjonalitet, forutsigbarhet og (etter hvert) avskaffelse av tortur og dødsstraff.</p>
+</div>
+
+<div class="box">
+<div class="box-title">Viktig — de sju ideene/verkene du MÅ kunne knytte til riktig tenker</div>
 <ul>
 <li><strong>Naturrett og samfunnskontrakt</strong> → Hobbes og Locke</li>
 <li><strong>Maktfordeling</strong> (lovgivende/utøvende/dømmende) → Montesquieu</li>
 <li><strong>Folkesuverenitet / allmennviljen</strong> → Rousseau (og Locke)</li>
 <li><strong>Ytringsfrihet, religionsfrihet, toleranse</strong> → Voltaire</li>
 <li><strong>Opplysning som myndiggjøring / «tenk selv»</strong> → Kant</li>
+<li><strong>Samle og spre all kunnskap kritisk</strong> → Diderot og d'Alembert (Encyklopedien)</li>
+<li><strong>Proporsjonal straff, mot tortur og dødsstraff</strong> → Beccaria</li>
 </ul>
 </div>
 <div class="box warn">
@@ -294,19 +357,23 @@ a.backtotop{position:fixed; right:16px; bottom:16px; background:var(--accent); c
 
 <section id="sjekkliste">
 <h2>Sjekkliste — kan du dette?</h2>
-<ul class="checklist">
-<li>Jeg kan forklare naturrett og samfunnskontrakt, og hvorfor Hobbes og Locke kom til forskjellige konklusjoner.</li>
-<li>Jeg kan forklare Montesquieus maktfordelingsprinsipp med alle tre statsmakter.</li>
-<li>Jeg kan forklare Rousseaus idé om folkesuverenitet/allmennviljen.</li>
-<li>Jeg kan forklare hvorfor Voltaire og Kant er viktige for ytringsfrihet og opplysning som prosess.</li>
-<li>Jeg kan beskrive stendersamfunnet i Frankrike og hvorfor det var urettferdig.</li>
-<li>Jeg kan liste minst tre dyptgripende og to utløsende årsaker til den franske revolusjonen.</li>
-<li>Jeg kan sette opp en tidslinje for den amerikanske revolusjonen (1763–1787) med minst fem daterte hendelser.</li>
-<li>Jeg kan sette opp en tidslinje for den franske revolusjonen (1789–1799) med minst åtte daterte hendelser.</li>
-<li>Jeg kan forklare forskjellen på reformfasen, republikk/terror-fasen og konsolideringsfasen i den franske revolusjonen.</li>
-<li>Jeg kan forklare hvordan den norske Grunnloven av 1814 bygger på de samme idéene.</li>
-<li>Jeg kan bruke idé → konflikt → resultat-strukturen i et sammenhengende svar om temaet.</li>
+<p class="checklist-progress" id="checklistProgress"></p>
+<ul class="checklist" id="checklistItems">
+<li><label><input type="checkbox" data-key="c1"><span class="checktext">Jeg kan forklare naturrett og samfunnskontrakt, og hvorfor Hobbes og Locke kom til forskjellige konklusjoner.</span></label></li>
+<li><label><input type="checkbox" data-key="c2"><span class="checktext">Jeg kan forklare Montesquieus maktfordelingsprinsipp med alle tre statsmakter.</span></label></li>
+<li><label><input type="checkbox" data-key="c3"><span class="checktext">Jeg kan forklare Rousseaus idé om folkesuverenitet/allmennviljen.</span></label></li>
+<li><label><input type="checkbox" data-key="c4"><span class="checktext">Jeg kan forklare hvorfor Voltaire og Kant er viktige for ytringsfrihet og opplysning som prosess.</span></label></li>
+<li><label><input type="checkbox" data-key="c5"><span class="checktext">Jeg kan forklare hva Encyklopedien var og hvorfor Diderot og d'Alembert måtte fortsette arbeidet i hemmelighet.</span></label></li>
+<li><label><input type="checkbox" data-key="c6"><span class="checktext">Jeg kan bruke Damiens-henrettelsen (1757) og Beccarias skrift (1764) som eksempel på brudd/kontinuitet i rettsvesenets utvikling.</span></label></li>
+<li><label><input type="checkbox" data-key="c7"><span class="checktext">Jeg kan beskrive stendersamfunnet i Frankrike og hvorfor det var urettferdig.</span></label></li>
+<li><label><input type="checkbox" data-key="c8"><span class="checktext">Jeg kan liste minst tre dyptgripende og to utløsende årsaker til den franske revolusjonen.</span></label></li>
+<li><label><input type="checkbox" data-key="c9"><span class="checktext">Jeg kan sette opp en tidslinje for den amerikanske revolusjonen (1763–1787) med minst fem daterte hendelser.</span></label></li>
+<li><label><input type="checkbox" data-key="c10"><span class="checktext">Jeg kan sette opp en tidslinje for den franske revolusjonen (1789–1799) med minst åtte daterte hendelser.</span></label></li>
+<li><label><input type="checkbox" data-key="c11"><span class="checktext">Jeg kan forklare forskjellen på reformfasen, republikk/terror-fasen og konsolideringsfasen i den franske revolusjonen.</span></label></li>
+<li><label><input type="checkbox" data-key="c12"><span class="checktext">Jeg kan forklare hvordan den norske Grunnloven av 1814 bygger på de samme idéene.</span></label></li>
+<li><label><input type="checkbox" data-key="c13"><span class="checktext">Jeg kan bruke idé → konflikt → resultat-strukturen i et sammenhengende svar om temaet.</span></label></li>
 </ul>
+<button type="button" class="checklist-reset" id="checklistReset">Nullstill sjekkliste</button>
 </section>
 
 <section id="feil">
@@ -336,6 +403,9 @@ a.backtotop{position:fixed; right:16px; bottom:16px; background:var(--accent); c
 <li><strong>Skrekkherredømmet (la Terreur):</strong> perioden 1793–1794 under bl.a. Robespierre, med masseanklager og henrettelser.</li>
 <li><strong>Restaurasjon:</strong> forsøket etter Napoleonskrigene på å gjenopprette den førrevolusjonære ordenen i Europa.</li>
 <li><strong>Checks and balances:</strong> at de tre statsmaktene kontrollerer og balanserer hverandre.</li>
+<li><strong>Encyklopedien:</strong> Diderot og d'Alemberts store oppslagsverk (1751–1772) som samlet og kritisk formidlet datidens kunnskap — forbudt av myndighetene, men fullført i hemmelighet.</li>
+<li><strong>Legalitetsprinsippet:</strong> prinsippet om at ingen kan straffes for noe som ikke uttrykkelig var forbudt ved lov på handlingstidspunktet (Beccaria).</li>
+<li><strong>Damiens-saken:</strong> den offentlige, timelange torturhenrettelsen av Robert-François Damiens i 1757 etter et attentatforsøk på Ludvig 15. — brukes ofte som eksempel på justis før opplysningstidens strafferettsreformer.</li>
 </ul>
 
 <footer class="pagefoot">
@@ -372,6 +442,97 @@ link.classList.add('active');
 });
 }, { rootMargin: '-30% 0px -60% 0px' });
 sections.forEach(s => obs.observe(s));
+
+// ---- Sjekkliste: avkrysning med lagring + komplimenter ----
+(function () {
+const STORAGE_KEY = 'historie-opplysningstid-sjekkliste-v1';
+const boxes = Array.from(document.querySelectorAll('#checklistItems input[type="checkbox"]'));
+const progressEl = document.getElementById('checklistProgress');
+const resetBtn = document.getElementById('checklistReset');
+if (!boxes.length) return;
+
+function loadState() {
+try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+catch (e) { return {}; }
+}
+function saveState(state) {
+try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+catch (e) {}
+}
+function updateProgress() {
+const checked = boxes.filter(b => b.checked).length;
+if (checked === boxes.length) {
+progressEl.textContent = 'Alt huket av — du er klar! 🎉';
+} else {
+progressEl.textContent = checked + ' av ' + boxes.length + ' huket av.';
+}
+}
+
+const state = loadState();
+boxes.forEach(b => {
+const key = b.dataset.key;
+if (state[key]) b.checked = true;
+});
+updateProgress();
+
+const complimenter = [
+'Nice jobbet! 💪', 'Du er på riktig vei! ✨', 'Snasent! Fortsett sånn! 🌟',
+'Du kommer til å knuse denne prøven! 🔥', 'Superb! 🦄', 'Du er en stjerne! ⭐',
+'Godt jobba! 💗', 'Du har dette! 🙌', 'Flink jente! 🦄', 'Se der ja! 💖'
+];
+const emojiSet = ['💗', '💖', '💕', '🦄', '✨', '🌟'];
+
+function celebrate(anchorEl) {
+const rect = anchorEl.getBoundingClientRect();
+const originX = rect.left + rect.width / 2;
+const originY = rect.top + rect.height / 2;
+
+for (let i = 0; i < 9; i++) {
+const span = document.createElement('span');
+span.className = 'celebrate-emoji';
+span.textContent = emojiSet[Math.floor(Math.random() * emojiSet.length)];
+const dx = (Math.random() - 0.5) * 160;
+const rot = (Math.random() - 0.5) * 60;
+span.style.setProperty('--dx', dx + 'px');
+span.style.setProperty('--rot', rot + 'deg');
+span.style.left = originX + 'px';
+span.style.top = originY + 'px';
+span.style.animationDelay = (Math.random() * 0.15) + 's';
+document.body.appendChild(span);
+setTimeout(() => span.remove(), 1800);
+}
+
+let toast = document.getElementById('complimentToast');
+if (!toast) {
+toast = document.createElement('div');
+toast.id = 'complimentToast';
+toast.className = 'compliment-toast';
+document.body.appendChild(toast);
+}
+toast.textContent = complimenter[Math.floor(Math.random() * complimenter.length)];
+toast.classList.add('show');
+clearTimeout(toast._hideTimer);
+toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+}
+
+boxes.forEach(b => {
+b.addEventListener('change', () => {
+const s = loadState();
+s[b.dataset.key] = b.checked;
+saveState(s);
+updateProgress();
+if (b.checked) celebrate(b);
+});
+});
+
+if (resetBtn) {
+resetBtn.addEventListener('click', () => {
+boxes.forEach(b => { b.checked = false; });
+saveState({});
+updateProgress();
+});
+}
+})();
 </script>
 
 </body>
