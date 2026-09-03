@@ -130,6 +130,40 @@ pointer-events:none; text-align:center; white-space:nowrap; max-width:90vw;
 .qa-item .qa-num{color:var(--brand); font-weight:700;}
 .qa-item .qa-tip{display:block; font-style:italic; color:var(--muted); font-size:.92em; margin-top:4px;}
 
+.flashcards{margin:18px 0 30px;}
+.flashcard-counter{font-size:.85em; color:var(--muted); margin-bottom:10px; text-align:center;}
+.flashcard-stage{perspective:1400px; max-width:520px; margin:0 auto;}
+.flashcard{position:relative; width:100%; min-height:190px; cursor:pointer;}
+.flashcard-inner{
+position:relative; width:100%; height:100%; min-height:190px;
+transition:transform .5s; transform-style:preserve-3d;
+}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+.flashcard-face{
+position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+border-radius:14px; border:1.5px solid var(--accent); background:#fff;
+display:flex; align-items:center; justify-content:center; text-align:center;
+padding:22px; box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.flashcard-face p{margin:0; font-size:1.05em;}
+.flashcard-face .flashcard-hint{display:block; margin-top:10px; font-size:.78em; font-style:italic; color:var(--muted); font-family:Georgia,serif;}
+.flashcard-front{background:var(--boxfill); font-weight:700; color:var(--brand);}
+.flashcard-back{transform:rotateY(180deg); color:var(--text); font-weight:400;}
+.flashcard.known .flashcard-front{border-color:#4c9a5c;}
+.flashcard-controls{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:16px;}
+.flashcard-controls button{
+background:var(--brand); color:#fff; border:none; border-radius:8px;
+padding:9px 14px; font-size:.9em; cursor:pointer; font-family:inherit;
+}
+.flashcard-controls button:hover{opacity:.88;}
+.flashcard-controls button#fcKnown{background:#fff; color:var(--brand); border:1.5px solid var(--brand);}
+.flashcard-controls button#fcKnown.active{background:#4c9a5c; border-color:#4c9a5c; color:#fff;}
+.flashcard-meta{
+display:flex; justify-content:center; align-items:center; gap:16px; margin-top:12px;
+font-size:.85em; color:var(--muted); flex-wrap:wrap; text-align:center;
+}
+.flashcard-linkbtn{background:none; border:none; color:var(--accent); text-decoration:underline; cursor:pointer; font-size:.95em; padding:0; font-family:inherit;}
+
 details.answer{
 background:#fff; border:1.5px solid #e3c3d1; border-radius:10px; padding:2px 16px; margin:0 0 12px;
 }
@@ -583,7 +617,36 @@ a.backtotop{position:fixed; right:16px; bottom:16px; background:var(--accent); c
 <h2>Øvingsoppgaver</h2>
 <p>Et sett med oppgaver i økende vanskegrad — kortsvar, langsvar/drøfting og en kildeoppgave. Prøv deg selv først; løsningsforslagene ligger i en egen seksjon under, som «vis svar»-bokser du åpner selv når du er klar.</p>
 <div class="box plain">
-<p><strong>Slik bruker du oppgavesettet:</strong> gjør Del A skriftlig uten notater. Gjør minst to av langsvarsoppgavene i Del B muntlig — si svaret høyt for deg selv eller til noen, siden Historie Vg3 har muntlig eksamen. Gjør kildeoppgaven i Del C skriftlig. Sjekk deg selv mot løsningsforslaget til slutt.</p>
+<p><strong>Slik bruker du oppgavesettet:</strong> begynn gjerne med flashcardene under for å friske opp begreper, personer og årstall. Gjør deretter Del A skriftlig uten notater. Gjør minst to av langsvarsoppgavene i Del B muntlig — si svaret høyt for deg selv eller til noen, siden Historie Vg3 har muntlig eksamen. Gjør kildeoppgaven i Del C skriftlig. Sjekk deg selv mot løsningsforslaget til slutt.</p>
+</div>
+
+<h3>Flashcards — pugg sentrale begreper, personer og årstall</h3>
+<p>Klikk på kortet (eller "Snu kortet") for å se svaret. Bruk pilene for å bla mellom kortene, "Stokk om" for å blande rekkefølgen, og "Kan denne" for å markere kort du husker uten å snu — fremgangen lagres i nettleseren din.</p>
+<div class="flashcards" id="flashcards">
+<div class="flashcard-counter" id="flashcardCounter">Kort 1 av 30</div>
+<div class="flashcard-stage">
+<div class="flashcard" id="flashcardEl">
+<div class="flashcard-inner">
+<div class="flashcard-face flashcard-front">
+<p id="flashcardFront"></p>
+</div>
+<div class="flashcard-face flashcard-back">
+<p id="flashcardBack"></p>
+</div>
+</div>
+</div>
+</div>
+<div class="flashcard-controls">
+<button id="fcPrev" type="button">◂ Forrige</button>
+<button id="fcFlip" type="button">Snu kortet</button>
+<button id="fcKnown" type="button">✓ Kan denne</button>
+<button id="fcNext" type="button">Neste ▸</button>
+</div>
+<div class="flashcard-meta">
+<span id="flashcardKnownCount">0 av 30 merket som «kan»</span>
+<button id="fcShuffle" type="button" class="flashcard-linkbtn">Stokk om</button>
+<button id="fcReset" type="button" class="flashcard-linkbtn">Nullstill merking</button>
+</div>
 </div>
 
 <h3>Del A — Kortsvarsoppgaver</h3>
@@ -806,6 +869,128 @@ saveState({});
 updateProgress();
 });
 }
+})();
+
+// ---- Flashcards: pugg begreper, personer og årstall ----
+(function () {
+const CARDS = [
+{ q: 'Opplysningstiden', a: 'Idéhistorisk periode (ca. 1688–1789) der fornuft og vitenskap ble satt over religiøs og kongelig autoritet.' },
+{ q: 'Naturrett', a: 'Idéen om at mennesket har universelle, medfødte rettigheter uavhengig av statens lover.' },
+{ q: 'Samfunnskontrakt', a: 'Tanken om at statsmakt bygger på en (tenkt) avtale mellom folket og styringen.' },
+{ q: 'Folkesuverenitet', a: 'Prinsippet om at all politisk makt utgår fra folket.' },
+{ q: 'Maktfordelingsprinsippet — hvem sto bak det?', a: 'Charles Montesquieu: makten bør deles i en lovgivende, en utøvende og en dømmende gren.' },
+{ q: 'Allmennviljen', a: 'Rousseaus begrep for folkets samlede, felles vilje — målet er alles beste, ikke nødvendigvis det flertallet mener.' },
+{ q: 'John Locke', a: 'Filosof som mente mennesket har medfødte rettigheter til liv, frihet og eiendom, og at folket har rett til opprør mot et diktatur.' },
+{ q: 'Thomas Hobbes', a: 'Mente mennesker gir fra seg makt til en hersker for å sikre fred og orden — knyttes til «det opplyste eneveldet».' },
+{ q: 'Voltaire', a: 'Talte for ytringsfrihet, religionsfrihet og var kritisk til slaveri; sto for deisme (Gud skapte verden, men styrer den ikke).' },
+{ q: 'Cesare Beccaria', a: 'Grunnla legalitetsprinsippet: ingen kan straffes for noe som ikke var forbudt ved lov da handlingen skjedde.' },
+{ q: 'Ludvig Holberg', a: 'Den mest kjente norske opplysningsskikkelsen, forfatter av «Jeppe på Bjerget» — kritisk til ren religiøs oppdragelse, sterk tro på fornuften.' },
+{ q: 'Enevelde', a: 'Styreform der kongen har all politisk makt.' },
+{ q: 'Konstitusjonelt monarki', a: 'Styreform der kongens makt er begrenset av en grunnlov og deles med et parlament.' },
+{ q: 'Magna Carta — årstall og betydning?', a: '1215. Begynnelsen på konstitusjonelt monarki i Storbritannia — begrenset kongens makt.' },
+{ q: 'Bill of Rights (Storbritannia) — årstall og betydning?', a: '1689. Slo fast at Parlamentet står over kongen og gjorde enevelde umulig i Storbritannia. Må ikke forveksles med den amerikanske US Bill of Rights.' },
+{ q: 'Stendersamfunn', a: 'Samfunn delt inn i juridisk ulike grupper med ulike rettigheter — i Frankrike: geistlighet (1.), adel (2.) og tredjestanden (3.).' },
+{ q: 'Boston Massacre — årstall?', a: '1770. Fem kolonister ble drept av britiske soldater i Boston.' },
+{ q: 'Boston Tea Party — årstall?', a: '1773. Aktivister kastet en ladning te fra britiske skip på sjøen i protest mot skatter.' },
+{ q: 'Den amerikanske uavhengighetserklæringen — dato?', a: '4. juli 1776. De 13 koloniene erklærte seg som en selvstendig stat, USA.' },
+{ q: 'Den amerikanske grunnloven — årstall?', a: '1787 (i kraft 1788). Ga USA en føderal republikk med maktfordeling mellom president, kongress og høyesterett.' },
+{ q: 'US Bill of Rights', a: 'De ti første grunnlovstilleggene (1789–91) til den amerikanske grunnloven — sikrer rettigheter som ytringsfrihet og religionsfrihet.' },
+{ q: 'Trekantkonflikten', a: 'Motsetningen mellom konge (ville beholde makten), adel (ville ha medbestemmelse, men beholde privilegier) og borgerskap (ville ha medbestemmelse og likhet) i Frankrike før 1789.' },
+{ q: 'Stormingen av Bastillen — dato?', a: '14. juli 1789. Regnes som starten på den franske revolusjonen — i dag Frankrikes nasjonaldag.' },
+{ q: 'Menneske- og borgerrettighetserklæringen — dato?', a: '26. august 1789. Slo fast folkesuverenitet og medfødte rettigheter som likhet for loven.' },
+{ q: 'Nasjonalkonventet', a: 'Den franske folkevalgte forsamlingen fra september 1792, valgt med allmenn stemmerett for menn over 21 år — avskaffet monarkiet.' },
+{ q: 'Jakobinerne', a: 'Den mest radikale politiske gruppen under revolusjonen — fikk kontroll fra 1791 og drev fram republikken og Terrorveldet.' },
+{ q: 'Skrekkherredømmet / Terrorveldet', a: 'Perioden 1793–1794 under blant annet Robespierre, med masseanklager og henrettelser.' },
+{ q: 'Maximilien Robespierre', a: 'Leder av velferdskomiteen under Terrorveldet — ble selv styrtet og henrettet i 1794.' },
+{ q: 'Direktoriet', a: '1795–1799. Den femmannsstyrte, moderate og ustabile utøvende makten i Frankrike mellom Terrorveldet og Napoleons statskupp.' },
+{ q: 'Napoleons statskupp — dato?', a: '9.–10. november 1799. Regnes som slutten på revolusjonstiåret i Frankrike.' },
+{ q: 'Code Napoléon — årstall?', a: '1804. Napoleons samlede lovverk for hele Frankrike — sikret privat eiendomsrett og likhet for loven.' },
+{ q: 'Wienerkongressen — årstall og mål?', a: '1814–1815. Møte mellom Europas stormakter etter Napoleons fall, ledet av Metternich — målet var å sikre maktbalansen i Europa.' },
+{ q: 'Norges grunnlov — årstall og sammenheng?', a: '1814. Vedtatt samtidig som stormaktene forhandlet på Wienerkongressen — inspirert av blant annet den amerikanske og den franske grunnloven.' }
+];
+
+const STORAGE_KEY = 'historie-opplysningstid-flashcards-known-v1';
+const cardEl = document.getElementById('flashcardEl');
+const frontEl = document.getElementById('flashcardFront');
+const backEl = document.getElementById('flashcardBack');
+const counterEl = document.getElementById('flashcardCounter');
+const knownCountEl = document.getElementById('flashcardKnownCount');
+const prevBtn = document.getElementById('fcPrev');
+const nextBtn = document.getElementById('fcNext');
+const flipBtn = document.getElementById('fcFlip');
+const knownBtn = document.getElementById('fcKnown');
+const shuffleBtn = document.getElementById('fcShuffle');
+const resetBtn2 = document.getElementById('fcReset');
+if (!cardEl) return;
+
+let order = CARDS.map((_, i) => i);
+let pos = 0;
+
+function loadKnown() {
+try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+catch (e) { return {}; }
+}
+function saveKnown(state) {
+try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+catch (e) {}
+}
+
+function updateKnownCount() {
+const known = loadKnown();
+const n = Object.values(known).filter(Boolean).length;
+knownCountEl.textContent = n + ' av ' + CARDS.length + ' merket som «kan»';
+}
+
+function render() {
+const idx = order[pos];
+const card = CARDS[idx];
+frontEl.textContent = card.q;
+backEl.textContent = card.a;
+cardEl.classList.remove('flipped');
+counterEl.textContent = 'Kort ' + (pos + 1) + ' av ' + CARDS.length;
+const known = loadKnown();
+knownBtn.classList.toggle('active', !!known[idx]);
+cardEl.classList.toggle('known', !!known[idx]);
+}
+
+function go(delta) {
+pos = (pos + delta + order.length) % order.length;
+render();
+}
+
+cardEl.addEventListener('click', () => cardEl.classList.toggle('flipped'));
+flipBtn.addEventListener('click', () => cardEl.classList.toggle('flipped'));
+prevBtn.addEventListener('click', () => go(-1));
+nextBtn.addEventListener('click', () => go(1));
+
+knownBtn.addEventListener('click', () => {
+const idx = order[pos];
+const known = loadKnown();
+known[idx] = !known[idx];
+saveKnown(known);
+knownBtn.classList.toggle('active', !!known[idx]);
+cardEl.classList.toggle('known', !!known[idx]);
+updateKnownCount();
+});
+
+shuffleBtn.addEventListener('click', () => {
+for (let i = order.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[order[i], order[j]] = [order[j], order[i]];
+}
+pos = 0;
+render();
+});
+
+resetBtn2.addEventListener('click', () => {
+saveKnown({});
+updateKnownCount();
+knownBtn.classList.remove('active');
+cardEl.classList.remove('known');
+});
+
+updateKnownCount();
+render();
 })();
 </script>
 
