@@ -188,6 +188,51 @@ cursor:pointer; text-align:center; box-shadow:0 4px 14px rgba(230,122,168,.35);
 .prove1-cta:hover{opacity:.9;}
 .prove1-panel{margin-top:18px;}
 .prove1-panel[hidden]{display:none;}
+
+.unicorn-game-wrap{
+position:relative; margin:16px 0 8px; border-radius:14px; overflow:hidden;
+border:2px solid var(--accent); background:linear-gradient(180deg,#FFE3F0 0%,#FFF7FB 65%,#FDEEF5 100%);
+box-shadow:0 4px 14px rgba(230,122,168,.2);
+}
+.unicorn-hud{
+display:flex; justify-content:space-between; align-items:center; gap:10px;
+padding:8px 14px; font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:14px; color:var(--brand);
+}
+#ugStars{letter-spacing:1px;}
+#unicornGame{display:block; width:100%; height:220px; touch-action:manipulation; cursor:pointer; background:transparent;}
+.ug-overlay{
+position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+gap:10px; background:rgba(255,250,252,.95); text-align:center; padding:16px; font-family:Arial,Helvetica,sans-serif;
+}
+.ug-overlay[hidden]{display:none;}
+.ug-overlay h4{margin:0; color:var(--brand); font-size:1.15em;}
+.ug-overlay p{margin:0; color:var(--text); font-size:.95em;}
+.ug-overlay button.ug-btn{
+background:var(--brand); color:#fff; border:none; padding:10px 22px; border-radius:22px;
+font-weight:700; cursor:pointer; font-size:15px; font-family:inherit;
+}
+.ug-overlay button.ug-btn:hover{opacity:.9;}
+#ugQuestionText{font-weight:700; font-size:1em; max-width:520px;}
+.ug-answers{display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; max-width:500px;}
+.ug-answers button{
+background:#fff; border:2px solid var(--accent); color:var(--text); padding:10px 8px; border-radius:10px;
+font-size:13.5px; cursor:pointer; font-family:inherit; text-align:left;
+}
+.ug-answers button:hover:not(:disabled){background:var(--boxfill);}
+.ug-answers button:disabled{cursor:default;}
+.ug-answers button.correct{background:#E1F6E4; border-color:#4CAF50; font-weight:700;}
+.ug-answers button.wrong{background:#FDE1E6; border-color:#E0577A;}
+.ug-milestone{
+position:absolute; top:-40px; left:50%; transform:translateX(-50%); white-space:nowrap;
+background:var(--brand); color:#fff; padding:6px 16px; border-radius:20px; font-size:12.5px;
+font-family:Arial,Helvetica,sans-serif; font-weight:700; box-shadow:0 3px 10px rgba(0,0,0,.2);
+transition:top .35s ease; pointer-events:none; z-index:5;
+}
+.ug-milestone.show{top:10px;}
+@media (max-width:520px){
+.ug-answers{grid-template-columns:1fr;}
+.unicorn-hud{font-size:12.5px;}
+}
 </style>
 </head>
 <body>
@@ -632,6 +677,33 @@ cursor:pointer; text-align:center; box-shadow:0 4px 14px rgba(230,122,168,.35);
 </div>
 
 </div>
+
+<h3 id="prove1spill">🦄 Prøve1-spillet</h3>
+<p>Hopp over hindringene med <strong>mellomrom</strong> (eller tap/klikk på mobil), og svar riktig når spørsmålene dukker opp! Du har <strong>5 stjerner</strong> — hver gang du svarer feil på et spørsmål, dør én stjerne. Klarer du å komme gjennom hele 1814 uten å miste alle fem?</p>
+<div class="unicorn-game-wrap">
+<div class="unicorn-hud">
+<span id="ugScore">Poeng: 0</span>
+<span id="ugHighscore">Rekord: 0</span>
+<span id="ugStars">⭐⭐⭐⭐⭐</span>
+</div>
+<div class="ug-milestone" id="ugMilestone"></div>
+<canvas id="unicornGame" width="640" height="220"></canvas>
+<div class="ug-overlay" id="ugStartOverlay">
+<h4>🦄 Prøve1-spillet</h4>
+<p>Hopp over hindringene og svar riktig på historiespørsmålene som dukker opp underveis. 5 feil svar, og spillet er over!</p>
+<button type="button" class="ug-btn" id="ugStartBtn">▶ Start spillet</button>
+</div>
+<div class="ug-overlay" id="ugQuestionOverlay" hidden>
+<p id="ugQuestionText"></p>
+<div class="ug-answers" id="ugAnswers"></div>
+</div>
+<div class="ug-overlay" id="ugGameOverOverlay" hidden>
+<h4>💔 Spillet er over!</h4>
+<p id="ugFinalScore"></p>
+<button type="button" class="ug-btn" id="ugRetryBtn">🔁 Prøv igjen</button>
+</div>
+</div>
+
 </section>
 
 <section id="kompetanse">
@@ -777,7 +849,7 @@ cursor:pointer; text-align:center; box-shadow:0 4px 14px rgba(230,122,168,.35);
 <h2>Øvingsoppgaver</h2>
 <p>Et sett med oppgaver i økende vanskegrad — kortsvar, langsvar/drøfting og en kildeoppgave. Prøv deg selv først; løsningsforslagene ligger i en egen seksjon under, som «vis svar»-bokser du åpner selv når du er klar.</p>
 <div class="box plain">
-<p><strong>Slik bruker du oppgavesettet:</strong> begynn gjerne med flashcardene under for å friske opp begreper, personer og årstall. Gjør deretter Del A skriftlig uten notater. Gjør minst to av langsvarsoppgavene i Del B muntlig — si svaret høyt for deg selv eller til noen, siden Historie Vg3 har muntlig eksamen. Gjør kildeoppgaven i Del C skriftlig. Prøv deg på bildetekstoppgaven i Del D som en siste sjekk på om du husker hele kronologien i riktig rekkefølge. Del E dekker Napoleons fall og veien til 1814 — spesielt viktig til <a href="#prove1">Prøve 1</a>. Sjekk deg selv mot løsningsforslaget til slutt.</p>
+<p><strong>Slik bruker du oppgavesettet:</strong> begynn gjerne med flashcardene under for å friske opp begreper, personer og årstall. Gjør deretter Del A skriftlig uten notater. Gjør minst to av langsvarsoppgavene i Del B muntlig — si svaret høyt for deg selv eller til noen, siden Historie Vg3 har muntlig eksamen. Gjør kildeoppgaven i Del C skriftlig. Prøv deg på bildetekstoppgaven i Del D som en siste sjekk på om du husker hele kronologien i riktig rekkefølge. Del E dekker Napoleons fall og veien til 1814 — spesielt viktig til <a href="#prove1">Prøve 1</a>. Del F er en kildeoppgave der du selv må lese en fagartikkel (intervju med en historiker) og svare på spørsmål ut fra den — dette trener nettopp kompetansemålet om å sammenligne framstillinger. Sjekk deg selv mot løsningsforslaget til slutt.</p>
 </div>
 
 <h3>Flashcards — pugg sentrale begreper, personer og årstall</h3>
@@ -875,6 +947,19 @@ cursor:pointer; text-align:center; box-shadow:0 4px 14px rgba(230,122,168,.35);
 <div class="qa-item"><span class="qa-num">E7.</span> Drøft påstanden: «Grunnloven av 1814 innførte demokrati i Norge.»<span class="qa-tip">Vanskelighetsgrad: middels/vanskelig. Bruk skillet folkerepresentativ/demokratisk, og nevn konkrete grupper som ikke hadde stemmerett.</span></div>
 <div class="qa-item"><span class="qa-num">E8.</span> Analyser hvordan 1814 er blitt brukt til å skape norsk nasjonal identitet, og drøft hvilke virkninger dette har hatt for ulike grupper.<span class="qa-tip">Vanskelighetsgrad: vanskelig. Bruk minst to konkrete eksempler (f.eks. nasjonalromantikken, 17. mai, grunnlovsjubileer) og minst to grupper som ble ekskludert fra fortellingen.</span></div>
 <div class="qa-item"><span class="qa-num">E9.</span> Forklar Flåteranet i 1807 og hvordan det bidro til å dra Danmark-Norge inn i Napoleonskrigene. Forklar deretter forskjellen mellom notabelmøtet i februar 1814 og riksforsamlingen i april–mai 1814.</div>
+
+<h3 id="delF">Del F — Kildeoppgave: intervju med Odd Arvid Storsveen</h3>
+<p>Les intervjuet med historikeren Odd Arvid Storsveen: <a href="https://www.apollon.uio.no/artikler/2014/1_den_norske_grunnloven.html" target="_blank" rel="noopener">«Grunnloven av 1814: Folkerepresentativ, men ikke demokratisk» (Apollon/UiO)</a>, og svar på oppgavene under. Dette er samme artikkel som brukes som kilde i <a href="#k6">kapittel 6.7</a> på denne siden, så du kan sammenligne svarene dine med det som står der.</p>
+<div class="qa-item"><span class="qa-num">F1.</span> Hva mener Storsveen med at Grunnloven var folkerepresentativ, ikke demokratisk?</div>
+<div class="qa-item"><span class="qa-num">F2.</span> Hvilken grunnlov gjaldt inntil 1814?</div>
+<div class="qa-item"><span class="qa-num">F3.</span> Hvilket grunnlovsutkast fikk størst betydning for utformingen av Grunnloven, og hvorfor nettopp dette?</div>
+<div class="qa-item"><span class="qa-num">F4.</span> Hva var de internasjonale forbildene for Grunnloven?</div>
+<div class="qa-item"><span class="qa-num">F5.</span> Hvilke endringer ble gjort for å tilpasse Grunnloven til unionen med Sverige?</div>
+<div class="qa-item"><span class="qa-num">F6.</span> Hvorfor har det ofte vært motstand mot å endre Grunnloven?</div>
+<div class="qa-item"><span class="qa-num">F7.</span> Hvilken symbolsk betydning fikk Grunnloven?</div>
+<div class="qa-item"><span class="qa-num">F8.</span> Hvorfor mener Storsveen at 1814 kan regnes som et startpunkt for dagens norske samfunn?</div>
+<div class="qa-item"><span class="qa-num">F9.</span> Hva er likt og ulikt når det gjelder verdier og ideer som Grunnloven ble bygd på, sammenlignet med ideer og verdier i dagens samfunn?</div>
+<div class="qa-item"><span class="qa-num">F10.</span> I hvilken grad har det vært meningsbrytning mellom historikere om Grunnlovens betydning?<span class="qa-tip">Vanskelighetsgrad: vanskelig. Denne oppgaven kobler direkte til kompetansemålet om å sammenligne ulike framstillinger av en historisk hendelse.</span></div>
 </section>
 
 <section id="losningsforslag">
@@ -967,6 +1052,19 @@ cursor:pointer; text-align:center; box-shadow:0 4px 14px rgba(230,122,168,.35);
 <p>Konklusjon: framstillinger av fortiden er sjelden nøytrale — de velges og formes for å tjene et formål (her: nasjonal samling), og et godt svar viser både hva fortellingen oppnådde og hvem den holdt utenfor.</p>
 </div></details>
 <details class="answer"><summary>Løsningsforslag E9 — Flåteranet og notabelmøtet vs. riksforsamlingen</summary><div class="answer-body"><p>Flåteranet (1807): Danmark-Norge hadde holdt seg utenfor Napoleonskrigene, men hadde en stor krigsflåte. Britene krevde at landet enten gikk til krig mot Frankrike eller overga flåten; da kong Fredrik 6. avslo, angrep britene København og tok kontroll over flåten. Dette presset Danmark-Norge inn i allianse med Napoleon og kontinentalblokaden, noe som førte til britisk motblokade, stopp i trelast- og fiskeeksport, stans i kornimport fra Danmark og hungersnød i Norge — og avdekket for alvor interessemotsetningene mellom Danmark og Norge.</p><p>Notabelmøtet (februar 1814) var møtet der Kristian Fredrik, mens Karl Johan fortsatt var i utlandet, kalte inn fremstående embetsmenn og handelsborgere til Eidsvoll og krevde arveretten til den norske tronen — han ønsket å styre som eneveldig konge. Georg Sverdrup ledet en protest mot dette og krevde folkesuverenitetsprinsippet, som endte med enighet om å skrive ut valg til en riksforsamling i stedet. Riksforsamlingen (april–mai 1814) var det påfølgende møtet der 112 folkevalgte representanter fra hele landet faktisk skrev grunnloven og signerte den 17. mai — altså et helt annet møte, med et helt annet mandat, enn notabelmøtet.</p></div></details>
+
+<h3>Del F — Kildeoppgave: Storsveen-intervjuet</h3>
+<p style="font-size:.9em;"><em>Løsningsforslagene under er skrevet med egne ord basert på intervjuet — bruk dem til å sjekke deg selv, ikke som en erstatning for å lese hele artikkelen selv.</em></p>
+<details class="answer"><summary>Løsningsforslag F1 — Folkerepresentativ, ikke demokratisk</summary><div class="answer-body"><p>Storsveen skiller mellom to ting: at folket er representert (folkerepresentativ) og at folket faktisk styrer (demokratisk). Grunnloven ga en avgrenset gruppe menn rett til å velge representanter til Stortinget, som igjen bestemte over lover og budsjett — det gjorde ordningen folkerepresentativ. Men fordi kvinner, menn under 25 år og menn uten tilstrekkelig eiendom var utelukket fra stemmerett (etter Storsveens anslag var rundt 55–60 % av den voksne mannlige befolkningen og alle kvinner uten stemmerett, slik at maksimalt 40–45 % av mennene kunne stemme), var ordningen ikke demokratisk i moderne forstand. Dette endret seg ikke vesentlig før etter 1884.</p></div></details>
+<details class="answer"><summary>Løsningsforslag F2 — Grunnloven før 1814</summary><div class="answer-body"><p>Fram til 1814 gjaldt Kongeloven av 1665 i Danmark-Norge, som ga eneveldskongen tilnærmet ubegrenset makt til å styre og gi lover — altså det motsatte utgangspunktet av en folkerepresentativ grunnlov.</p></div></details>
+<details class="answer"><summary>Løsningsforslag F3 — Falsen/Adler-utkastet</summary><div class="answer-body"><p>Utkastet til Christian Magnus Falsen og Johan Gunder Adler fikk størst betydning. Det var det mest omfattende og gjennomarbeidede utkastet som forelå, Christian Fredrik viste interesse for det, og Falsen ledet selv konstitusjonskomiteen på riksforsamlingen. Dermed ble nettopp dette utkastet trykt opp og lagt til grunn for forsamlingens videre arbeid.</p></div></details>
+<details class="answer"><summary>Løsningsforslag F4 — Internasjonale forbilder</summary><div class="answer-body"><p>Grunnlovsmennene bygde på naturrettsfilosofien og 1700-tallets politiske tenkning — særlig Locke, Rousseau, Montesquieu og De Lolme (jf. kapittel 1 på denne siden). Konkrete forbilder blant samtidige grunnlover var den amerikanske konstitusjonen av 1787, flere franske konstitusjonsutkast, den svenske grunnloven av 1809, den nederlandske av 1798 og den polske av 1791, i tillegg til kunnskap om det britiske parlamentet og den svenske riksdagen.</p></div></details>
+<details class="answer"><summary>Løsningsforslag F5 — Tilpasninger til unionen med Sverige</summary><div class="answer-body"><p>Det ble opprettet et stattholderembete som skulle styre Norge på vegne av den svenske kongen når han selv ikke var i landet. Statsrådet ble delt i en større avdeling i Norge og en mindre i Sverige. Norge beholdt egen kontroll over statsfinanser, myntvesen og handelsflagg, og norske lover ble fortsatt utformet på norsk (i praksis dansk-norsk skriftspråk) — men kongen beholdt personlig makt over utnevnelse av statsråder og militær kommando. Se også Novembergrunnloven i <a href="#k6">kapittel 6.5</a>.</p></div></details>
+<details class="answer"><summary>Løsningsforslag F6 — Motstand mot grunnlovsendringer</summary><div class="answer-body"><p>Storsveen peker på tre grunner: (1) selve endringsprosedyren er bevisst tungvint — et forslag må behandles av to påfølgende, valgte storting og krever to tredjedels flertall; (2) i praksis har man ofte heller innført nye ordninger ved siden av grunnlovsteksten uten å endre den formelt (parlamentarismen fungerte i praksis fra 1884, men ble ikke skrevet inn i Grunnloven før i 2007); (3) av nasjonale og tradisjonelle grunner har det aldri vært noen sterk bevegelse for å skrive en helt ny grunnlov, slik man har diskutert i enkelte andre land — Grunnloven fungerer nærmest som nasjonens eget «fødselsbevis».</p></div></details>
+<details class="answer"><summary>Løsningsforslag F7 — Symbolsk betydning</summary><div class="answer-body"><p>Grunnloven var viktig allerede i 1814 og forble et sentralt symbol gjennom hele unionstiden fram til 1905 — den viste at Norge var en fri nasjon og var samtidig et praktisk redskap for å handle som én. Personer som Henrik Wergeland og Bjørnstjerne Bjørnson bidro til å bygge opp denne symbolske betydningen (jf. 17. mai-tradisjonen i kapittel 6.8). Betydningen var likevel ikke lik for alle: for eiendomsbesittende borgere ga Grunnlovens friheter reell praktisk verdi, mens den for arbeidsfolk og tjenestefolk hadde mindre å si i hverdagen, siden rettssikkerhet og trykkefrihet i praksis kunne bli satt til side for denne gruppen.</p></div></details>
+<details class="answer"><summary>Løsningsforslag F8 — 1814 som startpunkt</summary><div class="answer-body"><p>Før 1814 var Norge en del av en større eneveldig helstat under dansk kontroll, og ble i praksis styrt som en slags koloni — økonomisk og militært utnyttet av Danmark (jf. dansketiden i kapittel 6.1). Med Grunnloven av 1814 gikk Norge inn i rekken av selverklærte nasjonalstater, og utviklingen har siden den gang gått sammenhengende i retning av en stadig mer moderne, selvstyrt nasjonalstat — en prosess som ble fullført med unionsoppløsningen i 1905, da Norge for første gang selv kunne styre sin egen utenrikspolitikk.</p></div></details>
+<details class="answer"><summary>Løsningsforslag F9 — Verdier da og nå</summary><div class="answer-body"><p>Likt: idéen om at folket har rett til å styre seg selv gjennom frie valg og folkevalgte forsamlinger, og at visse menneskerettigheter er ukrenkelige. Ulikt: i 1814 ønsket man bevisst å begrense politisk innflytelse ut fra eiendom og kjønn, noe vi ikke gjør i dag; aldersgrensen for stemmerett er senket, og forståelsen av menneskerettigheter er utvidet til også å omfatte religion, kjønn, etnisitet og seksuell orientering på måter grunnlovsmennene neppe hadde akseptert.</p></div></details>
+<details class="answer"><summary>Løsningsforslag F10 — Meningsbrytning blant historikere</summary><div class="answer-body"><p>Storsveen kjenner ikke til norske historikere som mener Grunnloven hadde en negativ betydning eller var et overgrep — til forskjell fra enkelte franske historikere som er kritiske til sin egen revolusjon. Uenigheten blant norske historikere har i stedet dreid seg om hvorvidt Grunnloven bør forstås som et uttrykk for en smal elites politikk eller som et reelt uttrykk for folkets interesser, og om virkeligheten levde opp til idealbildet fra senere 17. mai-taler. Selv Nasjonal Samling omtalte Eidsvoll som et stort og viktig historisk verk. I dag handler uenigheten mer om hvem som skal regnes som de rette arvtakerne etter 1814-verdiene — noe man blant annet har sett i debatten om Christian Frederik-statuen.</p></div></details>
 </section>
 
 <footer class="pagefoot">
@@ -1245,6 +1343,440 @@ panel.setAttribute('hidden', '');
 btn.textContent = 'Vis notater og oppgaver til Prøve 1 ▾';
 }
 });
+})();
+
+// ---- Prøve1-spillet: enhjørning-hopp med quiz ----
+(function () {
+const canvas = document.getElementById('unicornGame');
+if (!canvas) return;
+const ctx = canvas.getContext('2d');
+if (!ctx) return;
+const W = canvas.width, H = canvas.height;
+const GROUND_Y = H - 34;
+
+const scoreEl = document.getElementById('ugScore');
+const highscoreEl = document.getElementById('ugHighscore');
+const starsEl = document.getElementById('ugStars');
+const milestoneEl = document.getElementById('ugMilestone');
+const startOverlay = document.getElementById('ugStartOverlay');
+const startBtn = document.getElementById('ugStartBtn');
+const questionOverlay = document.getElementById('ugQuestionOverlay');
+const questionText = document.getElementById('ugQuestionText');
+const answersEl = document.getElementById('ugAnswers');
+const gameOverOverlay = document.getElementById('ugGameOverOverlay');
+const finalScoreEl = document.getElementById('ugFinalScore');
+const retryBtn = document.getElementById('ugRetryBtn');
+if (!scoreEl || !highscoreEl || !starsEl || !startOverlay || !startBtn || !questionOverlay || !questionText || !answersEl || !gameOverOverlay || !finalScoreEl || !retryBtn) return;
+
+const HS_KEY = 'historie-opplysningstid-unicorn-highscore';
+let highscore = 0;
+try { highscore = parseInt(localStorage.getItem(HS_KEY) || '0', 10) || 0; } catch (e) {}
+highscoreEl.textContent = 'Rekord: ' + highscore;
+
+// Spørsmålene under er hentet direkte fra oppgavene i Del A, C, D, E og F (se «Øvingsoppgaver»),
+// omskrevet til firevalgsspørsmål ut fra løsningsforslagene — og uten årstallsspørsmål.
+const QUESTIONS = [
+{ q: '(A1) Hvilke to tenkere forbindes særlig med naturrett og samfunnskontrakt?', options: ['Hobbes og Locke', 'Rousseau og Voltaire', 'Montesquieu og Kant', 'Diderot og Beccaria'], correct: 0 },
+{ q: '(A2) Hvem er tenkeren bak maktfordelingsprinsippet?', options: ['Montesquieu', 'Locke', 'Rousseau', 'Voltaire'], correct: 0 },
+{ q: '(A3) Hvorfor ble Encyklopedien forbudt av myndighetene?', options: ['Fordi den behandlet kongemakt, kirke og adel med en kritisk, fornuftsbasert tilnærming', 'Fordi den inneholdt religiøs propaganda', 'Fordi den støttet eneveldet', 'Fordi den var for dyr å trykke'], correct: 0 },
+{ q: '(A4) Hvorfor brukes henrettelsen av Damiens ofte som eksempel når man forklarer hvorfor Beccarias idéer var revolusjonerende?', options: ['Den viser den brutale, offentlige justisen Beccaria reagerte mot', 'Den viser hvordan Beccaria selv ble henrettet', 'Den beviser at tortur virket avskrekkende', 'Den viser Voltaires innflytelse på retten'], correct: 0 },
+{ q: '(A5) Hva var en sentral årsak til at det ble revolusjon i de amerikanske koloniene?', options: ['Skatt uten representasjon i det britiske parlamentet', 'For lav skatt fra Storbritannia', 'Mangel på egen hær', 'Konflikt med Frankrike om religion'], correct: 0 },
+{ q: '(A6) Hvorfor regnes stormingen av Bastillen som så viktig i fransk historie?', options: ['Den ble symbolet på revolusjonens start, og datoen er i dag Frankrikes nasjonaldag', 'Kongen ble henrettet der', 'Grunnloven ble signert der', 'Napoleon ble kronet der'], correct: 0 },
+{ q: '(A7) Hva skiller konstitusjonelt monarki fra republikken som fulgte i Frankrike?', options: ['Konstitusjonelt monarki hadde fortsatt en konge, republikken ingen', 'Konstitusjonelt monarki hadde ingen lover', 'Republikken gjeninnførte enevelde', 'De er det samme'], correct: 0 },
+{ q: '(A8) Hvem sto sentralt i skrekkherredømmet (la Terreur)?', options: ['Robespierre og velferdskomiteen', 'Ludvig 16. og hoffet', 'Napoleon og hæren', 'Falsen og Sverdrup'], correct: 0 },
+{ q: '(A9) Hvilke to grunnlover inspirerte særlig den norske Grunnloven av 1814?', options: ['Den amerikanske og den franske grunnloven', 'Den britiske og den russiske', 'Den danske og den osmanske', 'Den svenske og den portugisiske'], correct: 0 },
+{ q: '(A10) Hva menes med «checks and balances»?', options: ['At de tre statsmaktene kontrollerer og balanserer hverandre', 'At kongen har all makt', 'At folket stemmer direkte over alle lover', 'At domstolene lager lovene'], correct: 0 },
+{ q: '(A11) Hvilket krav fra tredjestanden i stenderforsamlingen nektet den franske kongen å godta?', options: ['Én stemme per representant, i stedet for én stemme per stand', 'Dobbelt så mange representanter', 'Avskaffelse av adelen', 'Skattefritak for bøndene'], correct: 0 },
+{ q: '(A12) Hvilken rolle spilte velferdskomiteen under Terrorveldet?', options: ['Den fikk all makt, ledet av Robespierre, og sto bak masseanklager og henrettelser', 'Den skrev den norske Grunnloven', 'Den ledet den amerikanske revolusjonen', 'Den forhandlet fred med Storbritannia'], correct: 0 },
+{ q: '(A13) Hva gikk konkordatet mellom Napoleon og den katolske kirken ut på?', options: ['Kirken ga avkall på inndratt jord, mot at staten lønnet prestene', 'Kirken fikk all makten sin tilbake', 'Kirken ble forbudt i Frankrike', 'Paven ble fransk statsoverhode'], correct: 0 },
+{ q: '(A14) Hva var hovedmålet til Wienerkongressen?', options: ['Å sikre maktbalansen mellom Europas stormakter', 'Å innføre demokrati i hele Europa', 'Å gjeninnsette Napoleon', 'Å oppløse alle monarkier'], correct: 0 },
+{ q: '(C1) Hvilken opplysningsidé bygger både menneskerettighetserklæringen og uavhengighetserklæringen på?', options: ['Naturrett — at mennesker har medfødte, universelle rettigheter', 'Merkantilisme', 'Helstatspolitikk', 'Enevelde'], correct: 0 },
+{ q: '(C2) Hvorfor representerer menneskerettighetserklæringen et brudd med stendersamfunnet?', options: ['Den sier alle mennesker er født frie og like, uavhengig av stand', 'Den gir adelen mer makt', 'Den gjeninnfører enevelde', 'Den forbyr ytringsfrihet'], correct: 0 },
+{ q: '(C4) Hvem var i praksis IKKE inkludert i formuleringer som «alle mennesker er skapt like» på 1700-tallet?', options: ['Kvinner og slaver, blant andre', 'Bare adelen', 'Bare geistligheten', 'Bare kongefamilien'], correct: 0 },
+{ q: '(D2) Hva var Ballhuseden?', options: ['Løftet om å ikke gi seg før Frankrike hadde fått en grunnlov', 'Navnet på kongens slott', 'Starten på Terrorveldet', 'Navnet på nasjonalforsamlingen'], correct: 0 },
+{ q: '(D6) Hva skjedde under kongefamiliens fluktforsøk?', options: ['De ble stoppet i Varennes og ført tilbake til Paris', 'De kom seg trygt til Østerrike', 'De ble løslatt av folket', 'De ble drept underveis'], correct: 0 },
+{ q: '(D8) Hvem var jakobinerne?', options: ['De mest radikale kreftene, som ønsket Frankrike som republikk uten konge', 'En gruppe moderate royalister', 'Napoleons generaler', 'Adelens forsvarere'], correct: 0 },
+{ q: '(D12) Hva kjennetegnet Direktoriet, styret som kom etter Robespierre?', options: ['Et svakt og korrupt styre av fem personer, som til slutt banet vei for Napoleon', 'Et sterkt og stabilt demokrati', 'En gjeninnføring av eneveldet', 'En allianse med Storbritannia'], correct: 0 },
+{ q: '(E1) Hva var kontinentalsystemet, og hvorfor bidro det til Napoleons fall?', options: ['Napoleons handelsblokade mot Storbritannia, som fungerte dårlig og førte til det katastrofale Russland-felttoget', 'En ny fransk grunnlov', 'Wienerkongressens fredsavtale', 'Sveriges unionsbetingelser'], correct: 0 },
+{ q: '(E2) I hvilken grad lyktes Europakonserten (samarbeidet mellom stormaktene etter Wienerkongressen)?', options: ['Delvis — ingen ny storkrig mellom stormaktene på lenge, men klarte ikke å stanse 1830- og 1848-revolusjonene', 'Helt — ingen konflikter i Europa igjen', 'Ikke i det hele tatt — krig brøt ut umiddelbart', 'Den ble aldri satt ut i praksis'], correct: 0 },
+{ q: '(E3) Hva slo Kielfreden fast?', options: ['At Danmark avsto Norge til Sverige', 'At Norge ble helt selvstendig', 'At Sverige avsto Finland til Russland', 'At Norge fikk en egen grunnlov'], correct: 0 },
+{ q: '(E4) Hvilken idé fra opplysningstiden ble brukt for å kreve at kongen skulle velges av folkevalgte representanter på Eidsvoll, ikke bare arve makten?', options: ['Folkesuverenitetsprinsippet', 'Naturretten alene', 'Maktfordelingsprinsippet', 'Sanskulottismen'], correct: 0 },
+{ q: '(E5) Hva var hovedforskjellen mellom Selvstendighetspartiet og Unionspartiet på Eidsvoll?', options: ['Selvstendighetspartiet ønsket uavhengighet, Unionspartiet aksepterte union med Sverige', 'Selvstendighetspartiet ønsket enevelde', 'Unionspartiet ønsket republikk', 'De var uenige bare om religion'], correct: 0 },
+{ q: '(E6) Hva var Mossekonvensjonen?', options: ['Avtalen der Norge gikk med på en løs, likeverdig union med Sverige, med Eidsvoll-grunnloven som forhandlingsgrunnlag', 'Den opprinnelige Eidsvoll-grunnloven', 'Sveriges egen grunnlov', 'Danmarks nye grunnlov'], correct: 0 },
+{ q: '(E6) Hvordan skiller Novembergrunnloven seg fra Eidsvoll-grunnloven av 17. mai?', options: ['Den er en revidert versjon, tilpasset kravene fra unionen med Sverige', 'Den er en helt ny og annerledes grunnlov', 'Den gjelder bare for Sverige', 'Den fjernet Stortinget'], correct: 0 },
+{ q: '(E9) Hva var Flåteranet, og hvordan dro det Danmark-Norge inn i Napoleonskrigene?', options: ['Britene tok den dansk-norske flåten, noe som presset landet inn i allianse med Napoleon', 'Danmark erklærte krig mot Sverige', 'Norge fikk sin egen marine', 'Napoleon angrep Danmark direkte'], correct: 0 },
+{ q: '(E9) Hva var notabelmøtet, til forskjell fra riksforsamlingen på Eidsvoll?', options: ['Møtet der Kristian Fredrik ville bli eneveldig konge, men ble stanset av Sverdrups protest', 'Møtet der 112 representanter skrev grunnloven', 'Fredsforhandlingene med Sverige', 'Stortingets aller første møte'], correct: 0 },
+{ q: '(F1) Hva mener historikeren Storsveen med at Grunnloven var folkerepresentativ, ikke demokratisk?', options: ['At folket fikk velge representanter, men at stemmeretten var forbeholdt en begrenset gruppe menn', 'At Grunnloven var fullt demokratisk fra starten av', 'At Grunnloven var eneveldig i praksis', 'At bare kvinner hadde stemmerett'], correct: 0 },
+{ q: '(F2) Hvilken lov/grunnlov gjaldt i Danmark-Norge inntil 1814?', options: ['Kongeloven, som ga eneveldskongen nær ubegrenset makt', 'Den svenske grunnloven', 'Den franske grunnloven', 'Novembergrunnloven'], correct: 0 },
+{ q: '(F3) Hvilket grunnlovsutkast fikk størst betydning for utformingen av Grunnloven?', options: ['Falsen og Adlers utkast', 'Wedel Jarlsbergs utkast', 'Sverdrups utkast', 'Kristian Fredriks eget utkast'], correct: 0 },
+{ q: '(F5) Hva var en av tilpasningene som ble gjort i Grunnloven for å passe unionen med Sverige?', options: ['Det ble opprettet et stattholderembete som styrte Norge på vegne av kongen', 'Norge mistet sin egen grunnlov helt', 'Stortinget ble avskaffet', 'Norge fikk felles hær med Sverige under svensk kommando alene'], correct: 0 },
+{ q: '(F6) Hvorfor har det ofte vært motstand mot å endre Grunnloven, ifølge Storsveen?', options: ['Endringsprosedyren er bevisst tungvint, og Grunnloven fungerer som en slags nasjonal «fødselsattest»', 'Det er faktisk forbudt ved lov å endre den', 'Ingen har noen gang foreslått endringer', 'Stortinget mangler myndighet til å endre den'], correct: 0 },
+{ q: '(F7) Hvilken symbolsk betydning fikk Grunnloven i unionstiden fram til 1905?', options: ['Den viste at Norge var en fri nasjon, og var et praktisk redskap for å handle som én', 'Den hadde ingen praktisk betydning for noen', 'Den ble holdt hemmelig for folket', 'Den ble erstattet av svensk lov'], correct: 0 },
+{ q: '(F8) Hvorfor mener Storsveen at 1814 kan regnes som et startpunkt for dagens norske samfunn?', options: ['Fordi Norge da gikk fra å være en del av en dansk helstat til å bli en selverklært nasjonalstat', 'Fordi Norge først da fikk innbyggere', 'Fordi unionen med Sverige startet da for alltid', 'Fordi Norge da mistet all selvstendighet'], correct: 0 },
+{ q: 'Var Grunnloven av 1814 demokratisk i moderne forstand?', options: ['Nei — den var folkerepresentativ, ikke demokratisk', 'Ja, fullt demokratisk', 'Nei, den var eneveldig', 'Ja, men bare for kvinner'], correct: 0 },
+{ q: 'Hvem ble faktisk valgt til norsk konge etter Novembergrunnloven — Karl Johan eller Karl 13.?', options: ['Karl 13.', 'Karl Johan', 'Kristian Fredrik', 'Fredrik 6.'], correct: 0 }
+];
+
+const MILESTONES = [
+{ at: 60, text: '🕯️ Opplysningstiden er i gang!' },
+{ at: 160, text: '📜 1789: Bastillen stormes!' },
+{ at: 280, text: '👑 1792: Republikken utropes i Frankrike!' },
+{ at: 420, text: '⚔️ 1799: Napoleon tar makten!' },
+{ at: 580, text: '🌊 1807: Flåteranet rammer Danmark-Norge!' },
+{ at: 760, text: '❄️ Januar 1814: Kielfreden signeres!' },
+{ at: 940, text: '🏛️ 17. mai 1814: Grunnloven undertegnes på Eidsvoll!' },
+{ at: 1140, text: '🕊️ August 1814: Mossekonvensjonen — union med Sverige!' },
+{ at: 1400, text: '🎉 1905: Unionen oppløses — du er en ekte historieekspert!' }
+];
+
+let running = false;
+let paused = false;
+let score = 0;
+let stars = 5;
+let speed = 4.2;
+let lastTs = 0;
+let groundOffset = 0;
+let unicorn = { x: 70, y: GROUND_Y, vy: 0, w: 46, h: 42, jumping: false, squash: 0 };
+let obstacles = [];
+let spawnIn = 60;
+let particles = [];
+let nextQuestionAt = 180;
+let questionQueue = [];
+let milestoneIdx = 0;
+let milestoneTimer = null;
+let flashTimer = 0;
+let rafId = null;
+
+function shuffledQuestionQueue() {
+const arr = QUESTIONS.map((_, i) => i);
+for (let i = arr.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[arr[i], arr[j]] = [arr[j], arr[i]];
+}
+return arr;
+}
+
+function resetGame() {
+score = 0;
+stars = 5;
+speed = 4.2;
+unicorn = { x: 70, y: GROUND_Y, vy: 0, w: 46, h: 42, jumping: false, squash: 0 };
+obstacles = [];
+spawnIn = 60;
+particles = [];
+nextQuestionAt = 180;
+questionQueue = shuffledQuestionQueue();
+milestoneIdx = 0;
+groundOffset = 0;
+flashTimer = 0;
+updateHud();
+}
+
+function updateHud() {
+scoreEl.textContent = 'Poeng: ' + Math.floor(score);
+const alive = Math.max(0, stars);
+starsEl.textContent = '⭐'.repeat(alive) + '☆'.repeat(5 - alive);
+}
+
+function nextQuestion() {
+if (questionQueue.length === 0) questionQueue = shuffledQuestionQueue();
+return QUESTIONS[questionQueue.pop()];
+}
+
+function showMilestone(text) {
+milestoneEl.textContent = text;
+milestoneEl.classList.add('show');
+clearTimeout(milestoneTimer);
+milestoneTimer = setTimeout(() => milestoneEl.classList.remove('show'), 2400);
+}
+
+function jump() {
+if (!running || paused) return;
+if (!unicorn.jumping) {
+unicorn.vy = -13.5;
+unicorn.jumping = true;
+}
+}
+
+function spawnObstacle() {
+const types = ['📚', '🌩️', '🪨'];
+const type = types[Math.floor(Math.random() * types.length)];
+obstacles.push({ x: W + 20, y: GROUND_Y - 6, w: 30, h: 30, type, hit: false });
+}
+
+function spawnParticle() {
+particles.push({
+x: unicorn.x + 6, y: unicorn.y + 8 + Math.random() * 8,
+vx: -(speed * 0.5) - Math.random(), vy: -0.4 - Math.random() * 0.4,
+life: 1, glyph: Math.random() < 0.5 ? '✨' : '💗'
+});
+}
+
+function askQuestion() {
+paused = true;
+const q = nextQuestion();
+questionText.textContent = q.q;
+answersEl.innerHTML = '';
+const opts = q.options.map((text, i) => ({ text, correct: i === q.correct }));
+for (let i = opts.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[opts[i], opts[j]] = [opts[j], opts[i]];
+}
+opts.forEach(opt => {
+const b = document.createElement('button');
+b.type = 'button';
+b.textContent = opt.text;
+b.addEventListener('click', () => {
+Array.from(answersEl.children).forEach(c => { c.disabled = true; });
+if (opt.correct) {
+b.classList.add('correct');
+score += 25;
+} else {
+b.classList.add('wrong');
+Array.from(answersEl.children).forEach(c => {
+if (c.textContent === q.options[q.correct]) c.classList.add('correct');
+});
+stars -= 1;
+updateHud();
+}
+setTimeout(() => {
+questionOverlay.setAttribute('hidden', '');
+if (stars <= 0) {
+endGame();
+} else {
+paused = false;
+nextQuestionAt = score + 170 + Math.random() * 90;
+}
+}, opt.correct ? 700 : 1300);
+});
+answersEl.appendChild(b);
+});
+questionOverlay.removeAttribute('hidden');
+}
+
+function endGame() {
+running = false;
+paused = false;
+if (score > highscore) {
+highscore = Math.floor(score);
+try { localStorage.setItem(HS_KEY, String(highscore)); } catch (e) {}
+}
+highscoreEl.textContent = 'Rekord: ' + highscore;
+finalScoreEl.textContent = 'Du fikk ' + Math.floor(score) + ' poeng. Rekord: ' + highscore + ' poeng.';
+gameOverOverlay.removeAttribute('hidden');
+}
+
+function update(dt) {
+if (paused) return;
+score += dt * (speed * 0.2);
+speed = 4.2 + score / 500;
+
+unicorn.vy += 0.85 * dt;
+unicorn.y += unicorn.vy * dt;
+if (unicorn.y >= GROUND_Y) {
+if (unicorn.jumping) unicorn.squash = 1;
+unicorn.y = GROUND_Y;
+unicorn.vy = 0;
+unicorn.jumping = false;
+}
+if (unicorn.squash > 0) unicorn.squash = Math.max(0, unicorn.squash - dt * 0.12);
+
+groundOffset = (groundOffset + speed * dt) % 40;
+
+spawnIn -= dt;
+if (spawnIn <= 0) {
+spawnObstacle();
+spawnIn = 55 + Math.random() * 45 - Math.min(30, speed * 3);
+}
+
+obstacles.forEach(o => { o.x -= speed * dt; });
+obstacles = obstacles.filter(o => o.x + o.w > -10);
+
+const ux1 = unicorn.x - unicorn.w * 0.28, ux2 = unicorn.x + unicorn.w * 0.30;
+const uy1 = unicorn.y - unicorn.h * 0.6, uy2 = unicorn.y + 6;
+obstacles.forEach(o => {
+if (!o.hit && o.x < ux2 && o.x + o.w > ux1 && o.y - o.h < uy2 && o.y > uy1) {
+o.hit = true;
+score = Math.max(0, score - 15);
+flashTimer = 12;
+}
+});
+
+if (Math.random() < 0.55) spawnParticle();
+particles.forEach(p => { p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt * 0.02; });
+particles = particles.filter(p => p.life > 0);
+
+if (flashTimer > 0) flashTimer -= dt;
+
+if (score >= nextQuestionAt) {
+askQuestion();
+}
+if (milestoneIdx < MILESTONES.length && score >= MILESTONES[milestoneIdx].at) {
+showMilestone(MILESTONES[milestoneIdx].text);
+milestoneIdx++;
+}
+
+updateHud();
+}
+
+function drawUnicorn(cx, cy, squash) {
+ctx.save();
+ctx.translate(cx, cy);
+ctx.scale(1 + squash * 0.12, 1 - squash * 0.12);
+
+ctx.strokeStyle = '#D9639A';
+ctx.lineWidth = 3;
+ctx.lineCap = 'round';
+ctx.beginPath(); ctx.moveTo(-9, -7); ctx.lineTo(-12, 11); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(9, -7); ctx.lineTo(12, 11); ctx.stroke();
+
+ctx.strokeStyle = '#C9A6F2';
+ctx.lineWidth = 5;
+ctx.beginPath();
+ctx.moveTo(-15, -11);
+ctx.quadraticCurveTo(-27, -3, -16, 7);
+ctx.stroke();
+
+ctx.fillStyle = '#FFFFFF';
+ctx.strokeStyle = '#D9639A';
+ctx.lineWidth = 2.5;
+ctx.beginPath();
+ctx.ellipse(-1, -9, 17, 11, 0, 0, Math.PI * 2);
+ctx.fill();
+ctx.stroke();
+
+ctx.beginPath();
+ctx.ellipse(15, -18, 8.5, 7.5, -0.2, 0, Math.PI * 2);
+ctx.fill();
+ctx.stroke();
+
+ctx.beginPath();
+ctx.ellipse(22, -14, 4, 3, 0.3, 0, Math.PI * 2);
+ctx.fill();
+ctx.stroke();
+
+ctx.fillStyle = '#FFFFFF';
+ctx.beginPath();
+ctx.moveTo(11, -24); ctx.lineTo(14, -30); ctx.lineTo(17, -23); ctx.closePath();
+ctx.fill();
+ctx.stroke();
+
+ctx.fillStyle = '#FFD86B';
+ctx.strokeStyle = '#E0A83A';
+ctx.lineWidth = 1.2;
+ctx.beginPath();
+ctx.moveTo(16, -25); ctx.lineTo(20, -35); ctx.lineTo(20, -23); ctx.closePath();
+ctx.fill();
+ctx.stroke();
+
+ctx.fillStyle = '#F2A6C6';
+ctx.beginPath();
+ctx.moveTo(7, -24);
+ctx.quadraticCurveTo(13, -19, 7, -15);
+ctx.quadraticCurveTo(14, -11, 9, -7);
+ctx.quadraticCurveTo(2, -15, 5, -22);
+ctx.closePath();
+ctx.fill();
+
+ctx.fillStyle = '#2A2A2A';
+ctx.beginPath();
+ctx.arc(18, -18, 1.6, 0, Math.PI * 2);
+ctx.fill();
+
+ctx.restore();
+}
+
+function draw() {
+ctx.clearRect(0, 0, W, H);
+
+ctx.fillStyle = '#FBF3FA';
+ctx.fillRect(0, 0, W, GROUND_Y + 8);
+
+ctx.fillStyle = '#F6DCEB';
+ctx.fillRect(0, GROUND_Y + 8, W, H - (GROUND_Y + 8));
+
+ctx.strokeStyle = '#E67AA8';
+ctx.lineWidth = 3;
+ctx.beginPath();
+ctx.moveTo(0, GROUND_Y + 8);
+ctx.lineTo(W, GROUND_Y + 8);
+ctx.stroke();
+
+ctx.strokeStyle = 'rgba(230,122,168,.4)';
+ctx.lineWidth = 2;
+ctx.setLineDash([4, 22]);
+ctx.lineDashOffset = -groundOffset * 1.5;
+ctx.beginPath();
+ctx.moveTo(0, GROUND_Y + 8);
+ctx.lineTo(W, GROUND_Y + 8);
+ctx.stroke();
+ctx.setLineDash([]);
+
+particles.forEach(p => {
+ctx.globalAlpha = Math.max(0, p.life);
+ctx.font = '14px serif';
+ctx.fillText(p.glyph, p.x, p.y);
+});
+ctx.globalAlpha = 1;
+
+obstacles.forEach(o => {
+ctx.fillStyle = 'rgba(255,255,255,.85)';
+ctx.beginPath();
+ctx.ellipse(o.x + o.w / 2, GROUND_Y + 6, 17, 6, 0, 0, Math.PI * 2);
+ctx.fill();
+ctx.font = '26px serif';
+ctx.textAlign = 'left';
+ctx.textBaseline = 'alphabetic';
+ctx.fillText(o.type, o.x, o.y);
+});
+
+ctx.fillStyle = 'rgba(214,120,168,.3)';
+ctx.beginPath();
+ctx.ellipse(unicorn.x, GROUND_Y + 6, 17 + unicorn.squash * 4, 5, 0, 0, Math.PI * 2);
+ctx.fill();
+
+drawUnicorn(unicorn.x, unicorn.y, unicorn.squash);
+
+if (flashTimer > 0) {
+ctx.fillStyle = 'rgba(224,87,122,' + Math.min(0.35, flashTimer / 30) + ')';
+ctx.fillRect(0, 0, W, H);
+}
+}
+
+function loop(ts) {
+if (!lastTs) lastTs = ts;
+const dt = Math.min(2.2, (ts - lastTs) / 16.6667);
+lastTs = ts;
+update(dt);
+draw();
+if (running) rafId = requestAnimationFrame(loop);
+}
+
+function startGame() {
+resetGame();
+running = true;
+paused = false;
+lastTs = 0;
+startOverlay.setAttribute('hidden', '');
+gameOverOverlay.setAttribute('hidden', '');
+questionOverlay.setAttribute('hidden', '');
+if (rafId) cancelAnimationFrame(rafId);
+rafId = requestAnimationFrame(loop);
+}
+
+startBtn.addEventListener('click', startGame);
+retryBtn.addEventListener('click', startGame);
+
+canvas.addEventListener('click', jump);
+canvas.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); }, { passive: false });
+document.addEventListener('keydown', (e) => {
+if (e.code === 'Space' && running && !paused) {
+e.preventDefault();
+jump();
+}
+});
+
+updateHud();
 })();
 </script>
 
