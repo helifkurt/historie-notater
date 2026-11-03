@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Etter Prøve 1 — lettlest</title>
+<style>
+:root{
+--brand:#E67AA8;
+--accent:#F2A6C6;
+--boxfill:#FDEEF5;
+--personfill:#F3F0FF;
+--personborder:#C9B8F2;
+--warnfill:#FFF5FA;
+--warnborder:#F2A6C6;
+--defborder:#8FD3C0;
+--deffill:#EFFBF7;
+--text:#222;
+--muted:#666;
+--bg:#FFFAFC;
+}
+*{box-sizing:border-box;}
+body{
+margin:0; font-family:"Times New Roman",Times,Georgia,serif;
+color:var(--text); background:var(--bg); line-height:1.65; font-size:17px;
+}
+header.topbar{
+position:sticky; top:0; z-index:50;
+background:var(--brand); color:#fff; padding:12px 16px;
+}
+header.topbar .wrap{max-width:760px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+header.topbar .title{font-weight:700; font-size:16px;}
+header.topbar a.back{color:#fff; font-size:13.5px; text-decoration:none; background:rgba(255,255,255,.18); padding:6px 10px; border-radius:8px;}
+header.topbar a.back:hover{background:rgba(255,255,255,.3);}
+
+main{max-width:760px; margin:0 auto; padding:24px 18px 90px; width:100%;}
+
+h1.doctitle{color:var(--brand); font-size:1.7em; margin-bottom:4px;}
+p.lede{color:var(--muted); font-size:1.02em; margin-top:0;}
+
+.toc{background:#fff; border:1.5px solid #eee; border-radius:12px; padding:14px 18px; margin:20px 0;}
+.toc h2{margin-top:0; font-size:1.05em; color:var(--brand); border:none; padding:0;}
+.toc ul{margin:6px 0 0; padding-left:1.2em; columns:2; column-gap:24px;}
+.toc li{margin-bottom:4px; break-inside:avoid;}
+.toc a{color:var(--text); text-decoration:none; font-size:.95em;}
+.toc a:hover{color:var(--brand); text-decoration:underline;}
+
+section{padding-top:8px; margin-bottom:6px; scroll-margin-top:66px;}
+h2.del{color:#fff; background:var(--brand); padding:10px 16px; border-radius:10px; margin-top:2.6em; font-size:1.35em;}
+h3{color:var(--accent); margin-top:1.8em; border-bottom:1px solid var(--accent); padding-bottom:4px;}
+h4{font-style:italic; color:#333; margin-bottom:.3em;}
+
+.box{background:var(--boxfill); border:1.5px solid var(--accent); border-radius:10px; padding:14px 16px; margin:16px 0;}
+.box .box-title{color:var(--accent); font-weight:700; margin-bottom:8px; font-size:.92em; text-transform:uppercase; letter-spacing:.02em;}
+
+.box.warn{background:var(--warnfill); border-color:var(--warnborder);}
+.box.warn .box-title{color:var(--warnborder);}
+
+.box.def{background:var(--deffill); border-color:var(--defborder);}
+.box.def .box-title{color:#3f9c84;}
+
+.person{background:var(--personfill); border:1.5px solid var(--personborder); border-radius:12px; padding:14px 16px; margin:16px 0; display:flex; gap:12px; align-items:flex-start;}
+.person .avatar{flex-shrink:0; width:42px; height:42px; border-radius:50%; background:var(--personborder); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1em; font-family:Georgia,serif;}
+.person .pbody .pname{font-weight:700; color:#5b3fa0; margin-bottom:2px;}
+.person .pbody .pyears{color:var(--muted); font-size:.88em; margin-bottom:6px;}
+.person .pbody p{margin:0;}
+
+.ideobox{border:1.5px solid #ddd; border-radius:12px; padding:16px 18px; margin:18px 0; background:#fff;}
+.ideobox .itag{display:inline-block; background:var(--brand); color:#fff; font-size:.78em; font-weight:700; padding:3px 10px; border-radius:999px; margin-bottom:8px;}
+.ideobox .oneliner{font-size:1.05em; font-style:italic; color:#444; margin:4px 0 10px;}
+.ideobox .facts{margin:0; padding-left:1.2em;}
+.ideobox .facts li{margin-bottom:5px;}
+
+a{color:var(--brand);}
+.backtotop{display:inline-block; margin-top:6px; font-size:.85em; color:var(--muted); text-decoration:none;}
+.backtotop:hover{color:var(--brand);}
+
+footer.pagefoot{max-width:760px; margin:40px auto 0; padding:16px 18px 40px; color:var(--muted); font-size:.85em; text-align:center; border-top:1px solid #eee;}
+
+@media (max-width:600px){
+.toc ul{columns:1;}
+h1.doctitle{font-size:1.4em;}
+.person{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+<div class="wrap">
+<span class="title">📘 Etter Prøve 1 — lettlest versjon</span>
+<a class="back" href="index.html">← Tilbake til hovednotatet</a>
+</div>
+</header>
+
+<main>
+
+<h1 class="doctitle">Etter Prøve 1: Ideologier og demokratiutvikling</h1>
+<p class="lede">Dette er en enklere, lettere forklart versjon av de to temaene vi har hatt etter Prøve 1 (07.10): <strong>ideologier</strong> (kapittel 34) og <strong>hvordan Norge ble mer demokratisk 1814–1905</strong> (kapittel 38–46). Alt fagstoffet er fortsatt med — jeg har bare prøvd å skrive setningene kortere og forklare ting i den rekkefølgen du faktisk trenger dem, slik at du slipper å lete etter forklaringer lenger ned i teksten. Fagord er fortsatt med (du trenger dem til prøven!), men de blir alltid forklart med en gang de dukker opp. Vil du ha den fulle, mer detaljerte versjonen med flere eksempler og øvingsoppgaver, se <a href="index.html#k7">hovednotatet</a>.</p>
+
+<div class="toc" id="toc">
+<h2>Innhold</h2>
+<ul>
+<li><a href="#d1-hva">Hva er en ideologi?</a></li>
+<li><a href="#d1-hvorfor">Hvorfor oppsto ideologiene?</a></li>
+<li><a href="#d1-liberalisme">Liberalisme</a></li>
+<li><a href="#d1-konservatisme">Konservatisme</a></li>
+<li><a href="#d1-sosialliberalisme">Sosialliberalisme</a></li>
+<li><a href="#d1-sosialisme">Sosialisme og kommunisme</a></li>
+<li><a href="#d1-sosialdemokrati">Sosialdemokrati</a></li>
+<li><a href="#d1-sammenligning">Sammenligning</a></li>
+<li><a href="#d2-forklare">Hvordan forklarer vi endring?</a></li>
+<li><a href="#d2-personer">Personene du må kjenne</a></li>
+<li><a href="#d2-byer">Byer og utvandring</a></li>
+<li><a href="#d2-industri">Fabrikker og ny teknologi</a></li>
+<li><a href="#d2-embetsmenn">Embetsmenn og lekfolk</a></li>
+<li><a href="#d2-bonder">Bøndene organiserer seg</a></li>
+<li><a href="#d2-sensur">Ytringsfrihet og sensur</a></li>
+<li><a href="#d2-samer">Samene og fornorskning</a></li>
+<li><a href="#d2-kvinner">Kvinnekamp</a></li>
+<li><a href="#d2-skole">Skole og språk</a></li>
+<li><a href="#d2-oppsummering">Alt henger sammen</a></li>
+</ul>
+</div>
+
+<h2 class="del" id="del1">DEL 1 — Ideologier (kapittel 34)</h2>
+
+<h3 id="d1-hva">Hva er en ideologi?</h3>
+<p>Tenk deg at du og vennene dine krangler om hvordan et gruppearbeid skal organiseres. Noen vil at alle skal gjøre akkurat det de selv er best på og få skryt for det (det minner om <strong>liberalisme</strong>). Andre vil at alle skal få like mye oppmerksomhet, uansett hvor mye de faktisk bidrar med (det minner om <strong>sosialisme</strong>). Dette er i bunn og grunn hva en <strong>ideologi</strong> er — bare i stor skala, for et helt samfunn.</p>
+<div class="box def">
+<div class="box-title">Ordforklaring: ideologi</div>
+<p>En ideologi er en <strong>pakke med meninger</strong> om hvordan samfunnet bør være. Den sier noe om: Hvor mye makt skal staten ha? Hvem skal eie ting (bedrifter, jord)? Hva er viktigst — at folk er frie til å gjøre som de vil, eller at alle har like mye?</p>
+</div>
+<p>De to verdiene som de fleste ideologier krangler om, er <strong>frihet</strong> og <strong>likhet</strong>. Problemet er at du sjelden kan få maks av begge deler samtidig — gir du folk full frihet til å tjene så mye penger de vil, blir det fort store forskjeller (mindre likhet). Skal alle ha akkurat like mye, må noen begrense friheten til dem som ville tjent mer. Ideologiene er rett og slett ulike svar på: <em>hvor på denne vektskålen bør vi ligge?</em></p>
+
+<h3 id="d1-hvorfor">Hvorfor oppsto ideologiene på 1800-tallet?</h3>
+<p>Før 1800-tallet var svaret enkelt for de fleste: «sånn er det fordi Gud/kongen har bestemt det». Tre ting ødela den forklaringen:</p>
+<ul>
+<li><strong>Sekularisering</strong> — folk stolte mindre på at Gud hadde bestemt hvordan samfunnet skulle se ut (dette lærte du om opplysningstiden i kapittel 1). Når den forklaringen falt bort, måtte man finne <em>nye</em> svar på hvem som skulle styre.</li>
+<li><strong>Industrialisering</strong> — fabrikker dukket opp, og en helt ny gruppe mennesker (fabrikkarbeidere) vokste fram.</li>
+<li><strong>Urbanisering</strong> — folk flyttet fra bygda til byen og levde helt annerledes enn før.</li>
+</ul>
+<div class="box warn">
+<div class="box-title">Vanlig misforståelse</div>
+<p>Mange tror ideologiene kom <em>etter hverandre</em>, som om liberalismen «ble ferdig» og så kom sosialismen. Det stemmer ikke! De oppsto på ulike tidspunkt, men lever <strong>side om side</strong> den dag i dag — se bare på norske politiske partier, som fortsatt bygger på seks ulike ideologier.</p>
+</div>
+
+<h3 id="d1-liberalisme">Liberalisme</h3>
+<div class="ideobox">
+<span class="itag">Ideologi 1 av 6</span>
+<p class="oneliner">«Staten skal blande seg minst mulig — la folk bestemme selv.»</p>
+<div class="person">
+<div class="avatar">JL</div>
+<div class="pbody"><div class="pname">John Locke (1632–1704)</div><div class="pyears">Engelsk filosof — du møtte ham allerede i kapittel 1</div>
+<p>Locke mente alle mennesker har <strong>naturlige rettigheter</strong> til liv, frihet og eiendom, helt uavhengig av hva en konge sier. Han mente statens eneste jobb er å beskytte disse rettighetene — ikke å styre folks liv. Dette er selve kjernen i liberalismen.</p></div>
+</div>
+<ul class="facts">
+<li><strong>Frihet eller likhet?</strong> Velger frihet, hver gang. Individet er viktigere enn fellesskapet.</li>
+<li><strong>Staten:</strong> så liten som mulig — kalles gjerne «nattvekterstaten»: den skal bare passe på lov og orden (politi, domstol, forsvar), omtrent som en nattevakt som bare griper inn hvis noe går galt.</li>
+<li><strong>Økonomi:</strong> fritt marked, minst mulig skatt og statlig innblanding.</li>
+<li><strong>Historie:</strong> lå bak både den amerikanske og den franske revolusjonen, og bak den norske Grunnloven av 1814.</li>
+<li><strong>I Norge i dag:</strong> Venstre, og delvis Høyre.</li>
+</ul>
+</div>
+
+<h3 id="d1-konservatisme">Konservatisme</h3>
+<div class="ideobox">
+<span class="itag">Ideologi 2 av 6</span>
+<p class="oneliner">«Ikke rør det som fungerer — endring skal skje sakte og forsiktig.»</p>
+<div class="person">
+<div class="avatar">EB</div>
+<div class="pbody"><div class="pname">Edmund Burke (1729–1797)</div><div class="pyears">Britisk politiker og filosof</div>
+<p>Burke så den franske revolusjonen skje — og ble skremt. Han syntes det var farlig å rive ned hele samfunnet (konge, kirke, adel) på en gang bare fordi man hadde noen nye idéer. Han mente tradisjoner og gamle institusjoner finnes av en grunn, og at man bør være forsiktig med å kaste dem.</p></div>
+</div>
+<ul class="facts">
+<li><strong>Frihet eller likhet?</strong> Ingen av delene er hovedsaken — <em>stabilitet og orden</em> er det viktigste.</li>
+<li><strong>Menneskesyn:</strong> mennesket er ikke fullkomment og trenger faste rammer (familie, kirke, lover) for ikke å havne i kaos.</li>
+<li><strong>Staten:</strong> skal være sterk nok til å holde orden, men selv også styres av tradisjon — ikke av plutselige, store reformer.</li>
+<li><strong>Historie:</strong> oppsto direkte som en motreaksjon på den franske revolusjonen (1789).</li>
+<li><strong>I Norge i dag:</strong> Høyre, og delvis KrF.</li>
+</ul>
+</div>
+
+<h3 id="d1-sosialliberalisme">Sosialliberalisme</h3>
+<div class="ideobox">
+<span class="itag">Ideologi 3 av 6</span>
+<p class="oneliner">«Frihet er fin — men bare hvis du faktisk har muligheten til å bruke den.»</p>
+<p>Tenk deg to elever: den ene har foreldre som kan betale for privatlærer, den andre må klare seg selv. Begge er «fri» til å ta eksamen artium — men er friheten like <em>reell</em> for begge? Sosialliberalismen sier nei, og det er akkurat dette poenget ideologien bygger på.</p>
+<ul class="facts">
+<li><strong>Hovedidé:</strong> en mellomting mellom liberalisme og sosialisme. Behold markedet og individuell frihet — men la staten hjelpe til, slik at friheten blir reell for <em>alle</em>, ikke bare dem som allerede har penger.</li>
+<li><strong>Staten:</strong> mer aktiv enn i liberalismen — bygger skoler, sykehus og trygdeordninger, men uten å avskaffe det frie markedet.</li>
+<li><strong>Nøkkelperson:</strong> økonomen <strong>John Maynard Keynes</strong> (1883–1946) mente staten burde gripe aktivt inn i økonomien, særlig i dårlige tider, i stedet for å bare la markedet styre seg selv.</li>
+<li><strong>I Norge i dag:</strong> Venstre regnes gjerne som sosialliberalt.</li>
+</ul>
+</div>
+
+<h3 id="d1-sosialisme">Sosialisme og kommunisme (marxisme)</h3>
+<div class="ideobox">
+<span class="itag">Ideologi 4 av 6</span>
+<p class="oneliner">«Arbeiderne skaper verdiene — da bør arbeiderne også eie dem.»</p>
+<div class="person">
+<div class="avatar">KM</div>
+<div class="pbody"><div class="pname">Karl Marx (1818–1883)</div><div class="pyears">Tysk filosof og økonom</div>
+<p>Marx mente historien drives framover av en konstant kamp mellom to grupper: de som <strong>eier</strong> fabrikkene (borgerskapet) og de som <strong>jobber</strong> i dem (arbeiderklassen, kalt «proletariatet»). Han mente arbeiderne ble lurt — de skapte verdiene, men eierne tok overskuddet. Løsningen hans var ikke å reformere systemet, men å <strong>fjerne</strong> det gjennom en revolusjon.</p></div>
+</div>
+<ul class="facts">
+<li><strong>Sosialisme (generelt):</strong> vil ha felles/statlig eierskap til fabrikker og ressurser i stedet for privat eierskap, for å få et likere samfunn.</li>
+<li><strong>Kommunisme (Marx' versjon):</strong> den mest radikale varianten — krever revolusjon, ikke gradvis endring. Etter revolusjonen skulle arbeiderklassen styre en periode («proletariatets diktatur») før samfunnet til slutt skulle bli helt klasseløst.</li>
+<li><strong>I praksis:</strong> i Sovjetunionen (fra 1917) ble ikke resultatet et fritt, klasseløst samfunn, men et sterkt, autoritært ettpartistyre.</li>
+<li><strong>I Norge i dag:</strong> Rødt ligger nærmest denne tradisjonen.</li>
+</ul>
+</div>
+
+<h3 id="d1-sosialdemokrati">Sosialdemokrati</h3>
+<div class="ideobox">
+<span class="itag">Ideologi 5 av 6 <span style="opacity:.8">(+ 6: samme familie som sosialisme)</span></span>
+<p class="oneliner">«Vi vil ha de samme målene som sosialismen — men vi når dem med stemmeseddelen, ikke med revolusjon.»</p>
+<div class="person">
+<div class="avatar">EB</div>
+<div class="pbody"><div class="pname">Eduard Bernstein (1850–1932)</div><div class="pyears">Tysk sosialist</div>
+<p>Bernstein var uenig med Marx på ett avgjørende punkt: han mente man <em>ikke</em> trengte en voldelig revolusjon for å gjøre samfunnet mer rettferdig. Målet kunne nås steg for steg, gjennom valg og lovendringer — man stemmer fram politikere som innfører velferdsordninger, i stedet for å styrte systemet med makt.</p></div>
+</div>
+<ul class="facts">
+<li><strong>Hovedidé:</strong> markedsøkonomi + en sterk velferdsstat (skole, helse, trygd for alle), finansiert med skatt — oppnådd gjennom demokratiske valg.</li>
+<li><strong>Norsk eksempel:</strong> <strong>Einar Gerhardsen</strong>, statsminister etter andre verdenskrig, bygde ut den norske velferdsstaten og trepartssamarbeidet (stat + arbeidsgivere + fagforeninger samarbeider om arbeidslivet).</li>
+<li><strong>I Norge i dag:</strong> Arbeiderpartiet er det tydeligste eksempelet.</li>
+</ul>
+</div>
+
+<h3 id="d1-sammenligning">De seks ideologiene — rask oversikt</h3>
+<div class="box plain" style="background:#f2f2f0; border-color:#bbb;">
+<p><strong>Liberalisme:</strong> minst mulig stat, mest mulig frihet.</p>
+<p><strong>Konservatisme:</strong> endring skal skje sakte — behold det som fungerer.</p>
+<p><strong>Sosialliberalisme:</strong> frihet + litt hjelp fra staten, så friheten blir reell for alle.</p>
+<p><strong>Sosialisme/kommunisme:</strong> felles eierskap, mer likhet — kommunismen vil ha revolusjon for å få det.</p>
+<p><strong>Sosialdemokrati:</strong> samme mål som sosialismen, men nådd gjennom valg, ikke revolusjon.</p>
+</div>
+<p>Tenk på det som en strek fra «minst stat» til «mest stat»: <br><strong>Liberalisme → Sosialliberalisme → Sosialdemokrati → Sosialisme → Kommunisme</strong>. Konservatismen ligger litt utenfor denne streken — den handler mer om <em>fart på endring</em> enn om statens størrelse.</p>
+<p style="text-align:right"><a class="backtotop" href="#toc">↑ Til toppen</a></p>
+
+<h2 class="del" id="del2">DEL 2 — Norge blir mer demokratisk (1814–1905)</h2>
+<p>Kapittel 6 i hovednotatet handlet om <em>selve</em> Grunnloven i 1814. Her skal vi se på noe litt annet: hvordan Norge, i tiårene <strong>etter</strong> 1814, gradvis ble et ekte demokrati — ikke bare på papiret, men i praksis. Dette skjedde ikke bare gjennom vedtak på Stortinget. Det skjedde fordi vanlige folk — bønder, arbeidere, kvinner, samer — organiserte seg og krevde mer makt <em>nedenfra</em>.</p>
+
+<h3 id="d2-forklare">Hvordan forklarer vi hvorfor noe endrer seg?</h3>
+<p>Før vi går videre: historikere bruker to ulike måter å forklare endring på. Begge trengs for å forstå hvorfor Norge ble mer demokratisk.</p>
+<div class="box def">
+<div class="box-title">To typer forklaringer</div>
+<p><strong>1) Hva motiverte folk?</strong> (motivforklaring) — hva ville personen egentlig oppnå? Dette er vanskelig å vite sikkert, fordi vi ikke kan spørre folk som levde for 150 år siden hva de faktisk tenkte.</p>
+<p><strong>2) Hva var årsakene?</strong> (årsaksforklaring) — her skiller vi mellom <strong>dype årsaker</strong> (ting som bygger seg opp over lang tid, f.eks. at stadig flere bønder kunne lese og skrive) og <strong>utløsende årsaker</strong> (en konkret hendelse som setter i gang endringen akkurat <em>da</em>, f.eks. et bestemt stortingsvedtak).</p>
+</div>
+<p>Et konkret eksempel: i <strong>1837</strong> fikk Norge nye lover som ga vanlige folk mulighet til å styre i kommunestyrer (formannskapslovene, se mer under «Bøndene organiserer seg»). Den <em>dype</em> årsaken var at bøndene lenge hadde hatt lite å si i saker som angikk dem. Den <em>utløsende</em> årsaken var at politikere på Stortinget faktisk fremmet og vedtok loven det året. Begge deler trengs for å forklare hvorfor loven kom akkurat i 1837, og ikke 20 år tidligere eller senere.</p>
+
+<h3 id="d2-personer">Personene du må kjenne</h3>
+<p>Her er alle de viktige personene i dette kapittelet, forklart <strong>med en gang</strong> — slik at du vet hvem de er før du møter navnene deres lenger ned i teksten.</p>
+
+<div class="person">
+<div class="avatar">HH</div>
+<div class="pbody"><div class="pname">Hans Nielsen Hauge</div><div class="pyears">1771–1824 · lekpredikant fra Østfold</div>
+<p>I 1796 fikk Hauge en religiøs opplevelse og bestemte seg for å reise rundt i Norge og forkynne — selv om han <em>ikke</em> var utdannet prest. Det var faktisk forbudt på den tiden (se «Ytringsfrihet og sensur» under). Han ble arrestert flere ganger og til slutt dømt. Han startet også flere bedrifter som ga vanlige folk arbeid. Tilhengerne hans kalles «haugianere», og bevegelsen hans blir sett på som starten på at vanlige folk begynte å organisere seg selv, uten å spørre om lov fra eliten.</p></div>
+</div>
+
+<div class="person">
+<div class="avatar">MT</div>
+<div class="pbody"><div class="pname">Marcus Thrane</div><div class="pyears">1817–1890 · grunnla Norges første arbeiderbevegelse</div>
+<p>I 1848 startet Thrane Norges første arbeiderforening. Bevegelsen hans vokste eksplosivt — på kort tid var det over 400 lokale foreninger med rundt 20 000 medlemmer! Han samlet underskrifter og krevde at vanlige arbeidsfolk skulle få stemmerett. Myndighetene ble redde og arresterte ham i 1851; han satt fire år i fengsel og endte med å emigrere til USA.</p></div>
+</div>
+
+<div class="person">
+<div class="avatar">JS</div>
+<div class="pbody"><div class="pname">Johan Sverdrup</div><div class="pyears">1816–1892 · politiker, Norges første parlamentariske statsminister</div>
+<p>Sverdrup kjempet for et prinsipp som kalles <strong>parlamentarisme</strong>: at regjeringen må ha flertallet på Stortinget bak seg for å kunne styre. I 1884 vant han denne kampen etter en rettssak (riksrett) der den gamle regjeringen tapte. Sverdrup ble da Norges første parlamentariske statsminister, og samme år ble Venstre stiftet — Norges aller første politiske parti.</p></div>
+</div>
+
+<div class="person">
+<div class="avatar">AR</div>
+<div class="pbody"><div class="pname">Anna Rogstad</div><div class="pyears">1854–1938 · lærer og politiker</div>
+<p>I 1911 ble Rogstad den første kvinnen som faktisk satt på Stortinget (som vararepresentant for Høyre) — bare noen år etter at kvinner fikk stemmerett (se «Kvinnekamp» under).</p></div>
+</div>
+
+<div class="person">
+<div class="avatar">O2</div>
+<div class="pbody"><div class="pname">Oscar 2</div><div class="pyears">1829–1907 · konge av Sverige og Norge fra 1872</div>
+<p>Oscar 2 nektet lenge Norge å ha et eget utenriksvesen (f.eks. egne konsuler i andre land) — dette var en av hovedgrunnene til at unionen med Sverige til slutt sprakk i 1905. Han godtok til slutt oppløsningen etter harde forhandlinger.</p></div>
+</div>
+
+<div class="person">
+<div class="avatar">CM</div>
+<div class="pbody"><div class="pname">Christian Michelsen</div><div class="pyears">1857–1925 · skipsreder og statsminister fra 1905</div>
+<p>Michelsen ledet regjeringen som 7. juni 1905 erklærte at unionskongen ikke lenger fungerte som Norges konge — dette var den formelle starten på unionsoppløsningen. Han forhandlet senere fram avtalen med Sverige (Karlstad-avtalen) som gjorde oppløsningen fredelig.</p></div>
+</div>
+
+<div class="person">
+<div class="avatar">H7</div>
+<div class="pbody"><div class="pname">Håkon 7</div><div class="pyears">1872–1957 · dansk prins som ble Norges konge</div>
+<p>Født med navnet Carl, dansk prins og gift med den britiske prinsesse Maud. Etter unionsoppløsningen i 1905 holdt Norge en folkeavstemning om landet skulle ha konge eller bli republikk — rundt 79 % stemte for monarki. Carl ble da valgt til konge og tok navnet Håkon 7.</p></div>
+</div>
+
+<p style="font-size:.9em; color:var(--muted)">Legg merke til at de fire siste (Rogstad, Oscar 2, Michelsen, Håkon 7) alle henger sammen med det som skjedde rundt 1884 og 1905 — altså selve høydepunktet i den politiske utviklingen.</p>
+
+<h3 id="d2-byer">Byene vokser, og folk drar til Amerika</h3>
+<p>Fra midten av 1800-tallet skjedde to store ting samtidig: byene vokste raskt (<strong>urbanisering</strong>), og enormt mange reiste til USA (<strong>utvandring</strong>).</p>
+<p>Christiania (dagens Oslo) gikk fra rundt 30 000 innbyggere i 1850 til over 200 000 i 1900 — mer enn seks ganger så mange på femti år! I byene oppsto helt nye yrker: industriarbeider, telegrafist, sykepleier, lærer, kontorist — yrker som knapt fantes på bygda.</p>
+<p>Samtidig dro nesten <strong>800 000 nordmenn</strong> til USA fram til 1915. Hvorfor? To grunner jobbet sammen:</p>
+<ul>
+<li><strong>Det som presset folk vekk fra Norge («push»):</strong> det var ikke nok jord og jobber til alle på bygda, og mange slet med fattigdom.</li>
+<li><strong>Det som trakk folk til USA («pull»):</strong> i 1862 vedtok USA en lov (Homestead Act) som ga nesten gratis jord til dem som ville bosette seg og dyrke den. Brev fra slektninger som allerede hadde reist («Amerika-brev») fortalte om et bedre liv.</li>
+</ul>
+
+<h3 id="d2-industri">Fabrikker og ny teknologi</h3>
+<p>Fra 1840-årene kom de første tekstilfabrikkene langs elva Akerselva i Kristiania. Fabrikkarbeid ga høyere lønn enn å jobbe som tjener — men også dårligere arbeidsforhold for mange, og mye barnearbeid (dette ble først begrenset ved lov i 1892). Rundt 1905 kom det som kalles «det store industrielle gjennombrudd»: ny, energikrevende industri (som trengte mye vannkraft) vokste fram — blant annet Norsk Hydro, grunnlagt i 1905 av ingeniøren <strong>Sam Eyde</strong> og vitenskapsmannen <strong>Kristian Birkeland</strong>, som fant opp en metode for å lage kunstgjødsel ved hjelp av norsk vannkraft.</p>
+<p>På bygda skjedde en like stor forandring, kalt <strong>«det store hamskiftet»</strong>: bøndene gikk fra å produsere mat bare til seg selv, til å produsere for å <em>selge</em> og tjene penger — hjulpet av nye redskaper som slåmaskiner og av bedre transport (tog, dampskip).</p>
+
+<h3 id="d2-embetsmenn">Embetsmenn og lekfolk</h3>
+<div class="box def">
+<div class="box-title">Ordforklaring: embetsmannsstaten</div>
+<p>I 1814 var Norge styrt av en liten gruppe på rundt 2000 <strong>embetsmenn</strong> — prester, jurister, offiserer, leger — av en befolkning på 850 000. De var utnevnt på livstid og hadde mye mer makt enn antallet deres skulle tilsi. Dette styresettet kalles <strong>embetsmannsstaten</strong>.</p>
+</div>
+<p>Embetsmennene ville helst beholde makten selv — de kjempet aktivt mot at vanlige bønder skulle få mer innflytelse. Men utover 1800-tallet vokste det fram motkrefter. Den viktigste religiøse motkraften var <strong>lekmannsbevegelsen</strong>, startet av Hans Nielsen Hauge (se over). Før Hauge var det en lov (konventikkelplakaten, fra 1741) som sa at <em>bare</em> prester kunne forkynne. Hauge brøt med denne loven — og selv om han ble straffet for det, åpnet han døren for at «vanlige folk» begynte å tro de kunne organisere seg selv, uten at eliten måtte godkjenne det først. Det viste seg å være en viktig øvelse for alt som kom etter: folk lærte å holde møter, tale foran andre og samle underskrifter — ferdigheter de senere brukte i politisk arbeid.</p>
+
+<h3 id="d2-bonder">Bøndene organiserer seg</h3>
+<p>Rundt 1814 jobbet 85 % av befolkningen med jordbruk — men bare 37 av de 112 mennene på Eidsvoll var bønder. Etter hvert ble bøndene mer og mer politisk aktive. En viktig seier kom i <strong>1837</strong>, da <strong>formannskapslovene</strong> ble vedtatt: de ga Norge egne, folkevalgte kommunestyrer i både by og bygd. Dette var mye lettere for bønder å engasjere seg i enn rikspolitikken på Stortinget — det handlet om saker de kjente fra hverdagen, som skatt og veier.</p>
+<p>Flere ting jobbet sammen for å svekke embetsmennenes makt: lekmannsbevegelsen, arbeiderbevegelsen (Thrane), bondeopposisjonen, og et voksende foreningsliv (for eksempel kampen for norsk skriftspråk — se «Skole og språk» under). Også bedre kommunikasjon hjalp: telegrafen kom i 1855, en ny skolelov i 1860 ga bedre utdanning, og stadig flere aviser gjorde det lettere for folk å følge med og delta i debatten.</p>
+
+<h3 id="d2-sensur">Ytringsfrihet og sensur</h3>
+<p>Grunnloven av 1814 ga Norge <strong>trykkefrihet</strong> — men med et viktig forbehold: man fikk ikke vise «forakt for religionen, sedeligheten eller statsmakten». Det var altså ikke full ytringsfrihet slik vi kjenner den i dag. Først i siste halvdel av 1800-tallet ble sensuren tydelig svakere, og forfattere og kunstnere som <strong>Henrik Ibsen</strong> og <strong>Christian Krogh</strong> kunne i stadig større grad kritisere samfunnet åpent.</p>
+<div class="box def">
+<div class="box-title">Ordforklaring: blasfemiparagrafen</div>
+<p>En egen lov som forbød å vise «ringeakt mot religion». Du tenker kanskje den forsvant for lenge siden — men den ble faktisk ikke fjernet fra loven før i <strong>2015</strong>! Et godt eksempel på at noen ting i samfunnet endrer seg sakte, selv om mye annet endrer seg raskt.</p>
+</div>
+
+<h3 id="d2-samer">Samene og fornorskningspolitikken</h3>
+<p>Etter 1814 ble det viktig for Norge å bygge en egen nasjonal identitet (du kjenner dette fra kapittel 6 — nasjonalromantikken). Problemet var at denne «norske fortellingen» ikke hadde plass til <strong>samene</strong>, selv om de hadde bodd i Norge lenge før Norge ble en egen stat.</p>
+<p>Myndighetene ønsket at alle i landet skulle ha samme kultur og samme språk. Dette kalles <strong>fornorskningspolitikken</strong>, og den rammet samene hardt:</p>
+<ul>
+<li>I <strong>1848</strong> mistet samer eiendomsretten til egne landområder.</li>
+<li>Fra <strong>1860</strong> ble det stadig strengere krav om at undervisning i skolen skulle foregå på norsk — samisk språk skulle i praksis forsvinne.</li>
+<li>I <strong>1852</strong> brøt det ut et voldelig opprør i Kautokeino, der en gruppe samer gjorde opprør mot lokale myndigheter. Opprøret ble slått hardt ned, og lederne ble henrettet.</li>
+</ul>
+<div class="box warn">
+<div class="box-title">Hvorfor dette er viktig for kompetansemålet</div>
+<p>Dette temaet er kjernen i kompetansemålet om <strong>myndiggjøring og frigjøring</strong>: samenes kamp mot fornorskningen er et eksempel på at en gruppe kjempet for sine rettigheter — og samtidig, ved å gjøre det, tvang Norge til å teste ut hvor langt de demokratiske idealene om likhet egentlig gjaldt (bare majoriteten, eller alle?).</p>
+</div>
+
+<h3 id="d2-kvinner">Kvinnekamp og likestilling</h3>
+<p>På 1800-tallet mente de fleste at kvinners plass var i hjemmet — med mann, barn og husarbeid. Men gradvis vokste det fram en motbevegelse. I <strong>1884</strong> stiftet blant andre <strong>Gina Krog</strong> Norsk Kvinnesaksforening, som kjempet for kvinners rettigheter. Litteraturen hjalp også til å spre debatten: i <strong>Henrik Ibsens</strong> skuespill <em>Et dukkehjem</em> (1879) forlater hovedpersonen Nora både mann og barn for å finne ut hvem hun selv er — dette sjokkerte datidens publikum og ble et symbol på kvinnekampen.</p>
+<p>Stemmeretten for kvinner kom gradvis, steg for steg:</p>
+<ul>
+<li><strong>1901:</strong> kvinner får begrenset stemmerett ved <em>kommune</em>valg.</li>
+<li><strong>1907:</strong> samme begrensede stemmerett ved <em>stortings</em>valg.</li>
+<li><strong>1913:</strong> full, allmenn stemmerett for kvinner — på lik linje med menn. Norge var et av de aller første landene i verden med dette.</li>
+</ul>
+
+<h3 id="d2-skole">Skole og språk</h3>
+<p>Norge fikk sitt første universitet i Christiania i 1811. Målet var å «fremme vitenskap», men i praksis handlet det mest om å utdanne landets elite. Matematikeren <strong>Niels Henrik Abel</strong> (1802–1829) ble en av de første norske «stjernene» innen akademia — han løste et matematisk problem som hadde stått uløst i hundrevis av år, og i dag er en av matematikkens fineste priser oppkalt etter ham.</p>
+<p>I <strong>1889</strong> kom en lov som ga alle barn, uansett bakgrunn, rett til sju år på folkeskolen — et viktig skritt mot at flere kunne delta som informerte borgere i demokratiet.</p>
+<p>Samtidig raste en stor språkstrid. <strong>Ivar Aasen</strong> hadde laget et nytt norsk skriftspråk (det vi i dag kaller nynorsk) bygget på norske dialekter — i stedet for det gamle, danskpregede skriftspråket. I <strong>1885</strong> vedtok Stortinget <strong>jamføringsvedtaket</strong>: nynorsk og bokmål ble sidestilt som likeverdige norske skriftspråk. Dette handlet om mer enn bare språk — det handlet om hva slags land Norge egentlig skulle være, nå som landet var blitt selvstendig.</p>
+
+<h3 id="d2-oppsummering">Alt henger sammen</h3>
+<p>Legg merke til mønsteret gjennom hele dette kapittelet: store, langsomme endringer (flere folk i byene, bedre skoler, flere aviser) skapte <em>grunnlaget</em> for at ting kunne endre seg. Men det var konkrete mennesker og bevegelser — Hauge, Thrane, bøndene, kvinnesaksforeningene, samenes motstand mot fornorskning — som faktisk <em>gjorde</em> noe med det, og presset fram endringene.</p>
+<div class="box plain" style="background:#f2f2f0; border-color:#bbb;">
+<p><strong>Husk denne drøftingsvinkelen:</strong> var demokratiseringen av Norge et <em>brudd</em> (rask endring) eller <em>kontinuitet</em> (langsom endring)? Begge deler stemmer, avhengig av hva du ser på — stemmeretten ble utvidet relativt raskt (1814 → 1913), men ting som fornorskningspolitikken varte helt til etter andre verdenskrig, og blasfemiparagrafen besto til 2015.</p>
+</div>
+
+<p style="text-align:right"><a class="backtotop" href="#toc">↑ Til toppen</a></p>
+
+</main>
+
+<footer class="pagefoot">
+<p>Historie Vg3 (HIS01-03) · lettlest versjon · Sist oppdatert av Elif Kurt</p>
+<p><a href="index.html">← Tilbake til hovednotatet med alle øvingsoppgaver og fasit</a></p>
+</footer>
+
+</body>
+</html>
